@@ -22,7 +22,7 @@ const createNewPlayer = (ship, playerName) => {
 	ai: ai,
 	balance: 50000 - ship.price,
 	ship: ship,
-	updateBalance: function (subtract) { this.balance = this.balance - subtract }
+	updateBalance: function (sum) { this.balance = parseInt(this.balance) + parseInt(sum) }
     }
   }
 }

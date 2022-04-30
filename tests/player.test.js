@@ -23,6 +23,6 @@ test ('a new players balance should be 50000', () => {
 test ('balance should be decreased by 100 after updateBalance', () => {
     const player = createNewPlayer(ship)
     const expectedResult = player.balance - 100
-    player.updateBalance(100)
+    player.updateBalance(-100)
     expect(player.balance).toEqual(expectedResult)
 })

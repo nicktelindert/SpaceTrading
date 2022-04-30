@@ -16,11 +16,12 @@ I do this project mostly to improve my coding and organization abilities.
 - CLI Basic game(In progress)
 - Buying mechanism
 - Player stats are visible
-- Basic game mechanism(Not completely implementen in CLI yet)
+- Selling product on a planet
+- complete game implementation in CLI 
 
 ## Todo
-- Selling product on a planet
-- Add cli code to go to the next round
+- implement basic AI player behaviour
+- Add scenario mechanism
 - A reactive webapp implementing the game
-- implement AI player mechanism
-- Create a fully CLI basis implementation
+- Add min-max range for market numbers
+- Add more non happy-flow tests

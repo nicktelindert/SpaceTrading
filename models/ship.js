@@ -12,10 +12,11 @@ const generateShipList = () => {
     names.forEach(shipName => {
         let newShip = {}
         newShip.name = shipName
+	newShip.cargo = []
         newShip.price = Math.floor(Math.random() * 15000)
         newShip.capacity = Math.floor(Math.random() * 150)
 	newShip.updateCapacity = function (amount) {
-            this.capacity = this.capacity - amount
+            this.capacity = this.capacity + amount
 	}
         ships.push(newShip)
     })
