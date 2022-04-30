@@ -12,12 +12,15 @@ I do this project mostly to improve my coding and organization abilities.
 - planets can be generated
 - AI players can be generated
 - a new "Game" can be created with all the necessary entities
-- Everything is fully unit tested with JES
-
+- Everything is fully unit tested with JEST(Mostly)
+- CLI Basic game(In progress)
+- Buying mechanism
+- Player stats are visible
+- Basic game mechanism(Not completely implementen in CLI yet)
 
 ## Todo
-- Add a buy and selling mechanism
-- Add a rounds mechanism
-- Add function to return players stats
-- Add a cli based version to test generic gameplay
-- Add a vue3 frontend to interact with the game
+- Selling product on a planet
+- Add cli code to go to the next round
+- A reactive webapp implementing the game
+- implement AI player mechanism
+- Create a fully CLI basis implementation
