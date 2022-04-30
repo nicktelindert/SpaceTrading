@@ -25,7 +25,8 @@ const generateProductList = () => {
 	  name: productName,
 	  price: price,
 	  totalPrice: price * quantity, 
-	  quantity: quantity
+	  quantity: quantity,
+	  updateQuantity: function (amount) { this.quantity = this.quantity - amount }
 	});
     })
     return list

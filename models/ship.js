@@ -1,18 +1,30 @@
 const ships = [
-    {
-        name: 'SteamRocket V1',
-        price: 10000,
-        capacity: 1000
-    },
-    {
-        name: 'SteamRocket V2',
-	price: 12000,
-	capacity: 1500
-    }
+]
+
+let names = [
+    'SteamRocket V1',
+    'ThoriumRocket V3',
+    'SteamRocket V2'
 ]
 
 
+const generateShipList = () => {
+    names.forEach(shipName => {
+        let newShip = {}
+        newShip.name = shipName
+        newShip.price = Math.floor(Math.random() * 15000)
+        newShip.capacity = Math.floor(Math.random() * 150)
+	newShip.updateCapacity = function (amount) {
+            this.capacity = this.capacity - amount
+	}
+        ships.push(newShip)
+    })
+}
+
 const purchaseShip = (name) => {
+   if (ships.length ===0) {
+       generateShipList()
+   }
    if (name) {
         const ship = ships.filter((val => val.name === name))
 	if (ship.length ===1) {
@@ -24,4 +36,4 @@ const purchaseShip = (name) => {
     }
 }
 
-export { purchaseShip, ships }
+export { purchaseShip, ships, generateShipList }

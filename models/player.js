@@ -11,16 +11,18 @@ const createNewPlayer = (ship, playerName) => {
     let ai = true
     let name;
     if (playerName) {
-      name = playerName	
+        ai = false
+        name = playerName	
     } else {
-      ai = false
       name = names.pop()
     }
     
     return {
         name: name,
+	ai: ai,
 	balance: 50000 - ship.price,
-	ship: ship
+	ship: ship,
+	updateBalance: function (subtract) { this.balance = this.balance - subtract }
     }
   }
 }
