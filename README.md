@@ -24,10 +24,10 @@ I do this project mostly to improve my coding and organization abilities.
 - Re-add to market when selling back
 - Generate new markets every round
 - implement basic AI player behaviour(Rather stupid)
+- Add eslint configuration 
 
 ## Todo
 - Add scenario mechanism
 - A reactive webapp implementing the game
 - Adapt CLI console.table to only show necessary info
-- Round marketshare price with 2 decimals
-- AI players seem to be selling my stuff, fix this
+- marketvalue calculations should be based on planet markets
