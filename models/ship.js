@@ -17,9 +17,16 @@ const getShipList = () => {
             newShip.name = shipName
      	    newShip.cargo = []
             newShip.price = generateMinMaxNumber(10000, 15000)
-            newShip.capacity = generateMinMaxNumber(100, 150)
-	    newShip.updateCapacity = function (amount) {
-                this.capacity = this.capacity + amount
+            newShip.totalCapacity = generateMinMaxNumber(100, 150)
+	    newShip.usedCapacity = 0
+	    newShip.getCapacity = function () {
+		return this.totalCapacity - this.usedCapacity
+	    }
+	    newShip.updateCapacity = function () {
+                this.usedCapacity = 0
+	        this.cargo.forEach((item) => {
+                    this.usedCapacity= this.usedCapacity + parseInt(item.quantity)   
+		})
 	    }
             ships.push(newShip)
         })

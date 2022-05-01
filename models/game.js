@@ -2,8 +2,9 @@ import { generateProductList, getMarketValues, getMarketValuePrice, getMarketVal
 import { getPlanetList, getCurrentPlanet, setCurrentPlanet } from './planet.js'
 import { purchaseShip } from './ship.js'
 import { getPlayerList, createNewPlayer, checkForWinners, isThereAHumanPlayer, getNonHumanPlayers } from './player.js'
+import { generateMinMaxNumber } from '../utils/numbers.js'
 
-const financialGoal = 200000
+const financialGoal = 100000
 let game = 0
 let round = 0
 
@@ -30,7 +31,7 @@ const startRound = (planetName) =>
 
 const buyProduct = (name, amount, player) => {
     const selectedProduct = getCurrentPlanet().market.filter(val => val.name === name)
-    if (amount > player.ship.capacity) {
+    if (amount > player.ship.getCapacity()) {
         console.log('You dont have enough room')
         return false
     }
@@ -44,7 +45,7 @@ const buyProduct = (name, amount, player) => {
 		price: totalPrice,
 		name: selectedProduct[0].name
 	    })
-	    player.ship.updateCapacity(-amount)
+	    player.ship.updateCapacity()
             return true
 	} else {
             console.log('You dont have enough money...')
@@ -69,7 +70,7 @@ const sellProduct  = (name, amount, player) => {
 	 getCurrentPlanet().market = getCurrentPlanet().market.filter(val => val.name !== name)
 	 planetProduct[0].updateQuantity(parseInt(amount))
 	 getCurrentPlanet().market.push(planetProduct[0])
-         player.ship.updateCapacity(parseInt(amount))
+         player.ship.updateCapacity()
 
 	 return true
        
@@ -101,13 +102,13 @@ const letAiPlay = () => {
     let planetList = getPlanetList()
     const nonHumanPlayers = getNonHumanPlayers()
     nonHumanPlayers.forEach((nonHumanPlayer) => {
-	const currentPlanet = planetList[Math.floor(Math.random() * planetList.length)]
+	const currentPlanet = planetList[generateMinMaxNumber(0,(planetList.length-1))]
 	if (nonHumanPlayer.ship.cargo.length >0) {
             nonHumanPlayer.ship.cargo.forEach((product) => {
-                sellProduct(product.name, product.amount, nonHumanPlayer)
+                sellProduct(product.name, product.quantity, nonHumanPlayer)
 	    })
 	} else {
-	    buyProduct(currentPlanet.market[Math.floor(Math.random() * currentPlanet.market.length)], nonHumanPlayer.ship.capacity, nonHumanPlayer)
+	    buyProduct(currentPlanet.market[generateMinMaxNumber(0, currentPlanet.market.length-1)].name, (nonHumanPlayer.ship.getCapacity()/4), nonHumanPlayer)
 	}
     })
 

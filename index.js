@@ -7,6 +7,7 @@ import { getPlayerList, getHumanPlayer } from './models/player.js'
 
 const planetList = getPlanetList()
 const players = getPlayerList()
+let playerName
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -14,17 +15,26 @@ const rl = readline.createInterface({
 });
 
 rl.question('What is your company name? ', function (name) {
-    const playerName = name
+    playerName = name
+    chooseShip()
+})
+
+const chooseShip = () => {
     console.table(getShipList())
     rl.question(`${playerName}, please choose which spaceship you want to buy?(Select by index) `, function (ship) {
-	const choosenShip = getShipList()[ship]
-        console.log(`You bought ${choosenShip.name}`)
-	createNewGame(playerName, choosenShip)
-	playerOverview()
-	startGame()
-	chooseAPlanet()
+	if (!getShipList()[ship]) {
+	    console.log('Please enter a correct index nr') 	
+	    chooseShip()
+	} else {
+	    const choosenShip = getShipList()[ship]
+            console.log(`You bought ${choosenShip.name}`)
+	    createNewGame(playerName, choosenShip)
+	    playerOverview()
+	    startGame()
+	    chooseAPlanet()
+	}
     })
-})
+}
 
 const playerOverview = () => {
     console.log(`Player Overview round: ${round}`)
@@ -36,7 +46,11 @@ const chooseAPlanet = () => {
     playerOverview()
     console.log('Planet overview')
     console.table(planetList)
-    rl.question('What planet would you like to visit first?(Select by index) ', function (planetIndex) {
+    rl.question('What planet would you like to visit ?(Select by index) ', function (planetIndex) {
+	if (!planetList[planetIndex]) {
+            chooseAPlanet()
+	    return
+	}
         const choosenPlanet = planetList[planetIndex]
 	startRound(choosenPlanet.name)
 	buyOrSell()	
@@ -76,7 +90,7 @@ const buyAProduct = () => {
     console.clear()
     const currentPlanet = getCurrentPlanet()
     console.log(`products available on ${currentPlanet.name}`)
-    console.log(`Free cargo space: ${getHumanPlayer().ship.capacity}`)
+    console.log(`Free cargo space: ${getHumanPlayer().ship.getCapacity()}`)
     console.log(`Balance: ${getHumanPlayer().balance}`)
     console.table(currentPlanet.market)
     rl.question ('What product would you like to buy?(Select by index) ', function (productIndex) {
