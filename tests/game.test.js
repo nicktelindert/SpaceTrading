@@ -1,36 +1,52 @@
-import { getHumanPlayer, buyProduct, createNewGame, planetList, players, round, startGame, endRound, startRound, currentPlanet } from '../models/game.js'
-import { purchaseShip, generateShipList } from '../models/ship.js'
-
+import { buyProduct, sellProduct, createNewGame, round, startGame, endRound, startRound, letAiPlay } from '../models/game.js'
+import { purchaseShip } from '../models/ship.js'
+import { getPlayerList, getHumanPlayer, createNewPlayer } from '../models/player.js'
 const planetName = 'Xena'
 const productName = 'Purple Bananas'
 
 createNewGame('Player One', purchaseShip('SteamRocket V1'))
-
-test ('Game should have 6 planets', () => {
-    expect(planetList).toHaveLength(6)
-})
+getPlayerList()
 
 test ('Game round should be equal to 1', () => {
     startGame(true)
     expect(round).toEqual(1)
 })
 
-test ('startRound should set the currentPlanet based on input', () => {
-    startRound('Xena')	
-    expect(currentPlanet.name).toEqual('Xena')	
-})
-
-test ('getHumanPlayer should return a human player',() => {
-    const humanPlayer = getHumanPlayer()
-    expect(humanPlayer.ai).toBeFalsy()	
-})
 
 test ('Buy a product', () => {
-    buyProduct(productName, 12, getHumanPlayer())
-    console.table([getHumanPlayer()])
+    startRound('Xena')
+    expect(buyProduct(productName, 13, getHumanPlayer())).toBeTruthy()
 }) 
 
-test ('Expect game to have 4 players', () => {
-    console.table(players)
-    expect(players).toHaveLength(4)
+test ('Buy a product should now return false', () => {
+    startRound('Xena')
+    expect(buyProduct(productName, 10000000, getHumanPlayer())).toBeFalsy()
+    
+}) 
+
+test ('Sell product should return false', () => {
+    startRound('Xena')
+    expect( sellProduct(productName,19,getHumanPlayer())).toBeFalsy()
+})
+
+test ('Sell product should return false because there is no room left', () => {
+    startRound('Xena')
+    expect( sellProduct(productName,getHumanPlayer().ship.capacity+1,getHumanPlayer())).toBeFalsy()
+})
+
+test ('Sell product should return true', () => {
+    startRound('Xena')
+    expect( sellProduct(productName,12,getHumanPlayer())).toBeTruthy()
+})
+
+test ('endRound should return false', () => {
+    for (let t=0; t<11;t++) {
+        startRound('Xena')
+	endRound()
+    }
+    expect(endRound()).toEqual(false)
+})
+
+test ('letAiPlay should return true', () => {
+    expect(letAiPlay()).toBeTruthy()
 })

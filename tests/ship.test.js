@@ -1,8 +1,7 @@
-import {purchaseShip, generateShipList, ships} from '../models/ship.js'
-generateShipList()
+import {purchaseShip, getShipList } from '../models/ship.js'
 
 test ('purchaseShip should be defined', () => {
-    console.table(ships)
+    console.table(getShipList())
     const ship = purchaseShip('SteamRocket V1')
     expect(ship).toBeDefined()
 }) 
@@ -12,8 +11,8 @@ test ('purchaseShould should return a random ship when no parameters are entered
     expect(ship).toBeDefined()
 })
 
-test ('Ships should equal 3 after running generateShipList', () => {
-    expect(ships).toHaveLength(3)
+test ('Ship list should contain 3 ships', () => {
+    expect(getShipList()).toHaveLength(3)
 })
 
 test ('updateCapacity should increase cargo bij 100', () => {

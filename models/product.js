@@ -1,3 +1,5 @@
+import { generateMinMaxNumber } from '../utils/numbers.js';
+
 let productNames = [
     'Purple Bananas',
     'Thorium Bike',
@@ -17,8 +19,9 @@ const generateProductList = () => {
     let list = []
 
     productNames.forEach( (productName) => {
-	const price = generateRandomNumber(generateRandomNumber(1000));
-	const quantity = generateRandomNumber(200);
+
+	const price = generateMinMaxNumber(10, 500);
+	const quantity = generateMinMaxNumber(20,100);
 
 	recalculateMarketValue (productName, price);
 	list.push({
@@ -26,15 +29,12 @@ const generateProductList = () => {
 	  price: price,
 	  totalPrice: price * quantity, 
 	  quantity: quantity,
-	  updateQuantity: function (amount) { this.quantity = this.quantity - amount }
+	  updateQuantity: function (amount) { this.quantity = this.quantity + amount }
 	});
     })
     return list
 }
 
-const generateRandomNumber = (max) => {
-    return Math.floor(Math.random() * (max+1));
-}
 
 const recalculateMarketValue = (productName, price) => {
     const currentValue = getMarketValue(productName)
@@ -74,4 +74,4 @@ const getMarketValuePrice = (productName) => {
 
 const getMarketValues = () => marketValues
 
-export {generateProductList, generateRandomNumber, getMarketValue, getMarketValuePrice, getMarketValues }
+export {generateProductList, getMarketValue, getMarketValuePrice, getMarketValues }

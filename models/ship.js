@@ -1,3 +1,5 @@
+import { generateMinMaxNumber } from '../utils/numbers.js';
+
 const ships = [
 ]
 
@@ -8,23 +10,27 @@ let names = [
 ]
 
 
-const generateShipList = () => {
-    names.forEach(shipName => {
-        let newShip = {}
-        newShip.name = shipName
-	newShip.cargo = []
-        newShip.price = Math.floor(Math.random() * 15000)
-        newShip.capacity = Math.floor(Math.random() * 150)
-	newShip.updateCapacity = function (amount) {
-            this.capacity = this.capacity + amount
-	}
-        ships.push(newShip)
-    })
+const getShipList = () => {
+    if (ships.length ===0 ) {
+        names.forEach(shipName => {
+            let newShip = {}
+            newShip.name = shipName
+     	    newShip.cargo = []
+            newShip.price = generateMinMaxNumber(10000, 15000)
+            newShip.capacity = generateMinMaxNumber(100, 150)
+	    newShip.updateCapacity = function (amount) {
+                this.capacity = this.capacity + amount
+	    }
+            ships.push(newShip)
+        })
+    }	
+    
+    return ships
 }
 
 const purchaseShip = (name) => {
    if (ships.length ===0) {
-       generateShipList()
+       getShipList()
    }
    if (name) {
         const ship = ships.filter((val => val.name === name))
@@ -33,8 +39,8 @@ const purchaseShip = (name) => {
 	}
     } else {
 
-    	return ships[Math.floor(Math.random() * ships.length)]
+    	return ships[generateMinMaxNumber(0, ships.length)]
     }
 }
 
-export { purchaseShip, ships, generateShipList }
+export { purchaseShip, getShipList }

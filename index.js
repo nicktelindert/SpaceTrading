@@ -1,7 +1,12 @@
 import * as readline from "readline";
-import { createNewGame, players, planetList, getHumanPlayer, buyProduct, sellProduct, startRound, endRound, startGame, currentPlanet, round } from './models/game.js'
+import { createNewGame, buyProduct, sellProduct, startRound, endRound, startGame, round } from './models/game.js'
 import { getMarketValuePrice } from './models/product.js'
-import { ships, generateShipList } from './models/ship.js'
+import { getShipList } from './models/ship.js'
+import { getPlanetList, getCurrentPlanet } from './models/planet.js'
+import { getPlayerList, getHumanPlayer } from './models/player.js'
+
+const planetList = getPlanetList()
+const players = getPlayerList()
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -10,10 +15,9 @@ const rl = readline.createInterface({
 
 rl.question('What is your company name? ', function (name) {
     const playerName = name
-    generateShipList()
-    console.table(ships)
+    console.table(getShipList())
     rl.question(`${playerName}, please choose which spaceship you want to buy?(Select by index) `, function (ship) {
-	const choosenShip = ships[ship]
+	const choosenShip = getShipList()[ship]
         console.log(`You bought ${choosenShip.name}`)
 	createNewGame(playerName, choosenShip)
 	playerOverview()
@@ -28,6 +32,8 @@ const playerOverview = () => {
 }
 
 const chooseAPlanet = () => {
+    console.clear()
+    playerOverview()
     console.log('Planet overview')
     console.table(planetList)
     rl.question('What planet would you like to visit first?(Select by index) ', function (planetIndex) {
@@ -38,10 +44,12 @@ const chooseAPlanet = () => {
 }
 
 const gameOver = () => {
+    console.clear()
     console.log('GAME OVER...')
 }
 
 const buyOrSell = () => {
+    console.clear()
     rl.question('Would you like to [B]uy of [S]ell? Enter N for next round. ', function(option) {
         switch (option) {
             case 'B':
@@ -55,7 +63,6 @@ const buyOrSell = () => {
 		    gameOver()
 		    break;
 		}
-	        playerOverview()
 		chooseAPlanet()
 	    break;
 	    default: 
@@ -66,8 +73,11 @@ const buyOrSell = () => {
 }
 
 const buyAProduct = () => {
+    console.clear()
+    const currentPlanet = getCurrentPlanet()
     console.log(`products available on ${currentPlanet.name}`)
     console.log(`Free cargo space: ${getHumanPlayer().ship.capacity}`)
+    console.log(`Balance: ${getHumanPlayer().balance}`)
     console.table(currentPlanet.market)
     rl.question ('What product would you like to buy?(Select by index) ', function (productIndex) {
         if (!currentPlanet.market[productIndex]) {
@@ -90,6 +100,8 @@ const buyAProduct = () => {
 }
 
 const sellAProduct = () => {
+    console.clear()
+    const currentPlanet = getCurrentPlanet()
     console.log('products available in your cargo')
     const cargo = getHumanPlayer().ship.cargo
     console.table(cargo)

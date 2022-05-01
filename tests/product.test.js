@@ -1,15 +1,10 @@
-import { generateProductList, generateRandomNumber, getMarketValuePrice, getMarketValues, getMarketValue } from '../models/product.js';
+import { generateProductList, getMarketValuePrice, getMarketValues, getMarketValue } from '../models/product.js';
 
 test ('product list should return an array of length 10', () => {
     const productList = generateProductList();
     expect(productList).toHaveLength(10);
     console.table(productList);
 })
-
-test ('Expect number to be within margin', () => {
-    expect(generateRandomNumber(10)).toBeLessThanOrEqual(10);
-})
-
 
 test ('Expect getMarketValuePrice to be bigger than 0', () => {
     generateProductList();
