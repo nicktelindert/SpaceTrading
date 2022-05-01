@@ -30,7 +30,7 @@ const startRound = (planetName) => {
 
 const buyProduct = (name, amount, player) => {
   const selectedProduct = getMarketProductByName(name);
-  if (amount > player.ship.getCapacity()) {
+  if (amount > player.ship.capacity) {
     return false;
   }
   if (selectedProduct) {
@@ -96,7 +96,7 @@ const letAiPlay = () => {
           sellProduct(product.name, product.quantity, nonHumanPlayer);
         });
       } else {
-        buyProduct(currentPlanet.market[generateMinMaxNumber(0, currentPlanet.market.length-1)].name, (nonHumanPlayer.ship.getCapacity()/4), nonHumanPlayer);
+        buyProduct(currentPlanet.market[generateMinMaxNumber(0, currentPlanet.market.length-1)].name, (nonHumanPlayer.ship.capacity/4), nonHumanPlayer);
       }
     }
   });

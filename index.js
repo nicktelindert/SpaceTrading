@@ -104,7 +104,7 @@ const buyAProduct = () => {
   console.clear();
   const currentPlanet = getCurrentPlanet();
   console.log(`products available on ${currentPlanet.name}`);
-  console.log(`Free cargo space: ${getHumanPlayer().ship.getCapacity()}`);
+  console.log(`Free cargo space: ${getHumanPlayer().ship.capacity}`);
   console.log(`Balance: ${getHumanPlayer().balance}`);
   console.table(currentPlanet.market);
   rl.question('What product would you like to buy?(Select by index) ', function(productIndex) {

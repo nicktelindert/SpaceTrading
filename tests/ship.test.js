@@ -1,7 +1,6 @@
-import {purchaseShip, getShipList} from '../models/ship.js';
+import {purchaseShip, getShipList, updateCapacity} from '../models/ship.js';
 
 test('purchaseShip should be defined', () => {
-  console.table(getShipList());
   const ship = purchaseShip('SteamRocket V1');
   expect(ship).toBeDefined();
 });
@@ -17,12 +16,12 @@ test('Ship list should contain 3 ships', () => {
 
 test('updateCapacity should decrease cargo bij 100', () => {
   const ship = purchaseShip();
-  const expectedResult = ship.getCapacity() - 100;
+  const expectedResult = ship.capacity - 100;
   ship.cargo.push({
     quantity: 100,
   });
-  ship.updateCapacity();
-  expect(ship.getCapacity()).toEqual(expectedResult);
+  updateCapacity(ship);
+  expect(ship.capacity).toEqual(expectedResult);
 });
 
 test('purchaseShip should return the correct ship', () => {

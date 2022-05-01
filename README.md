@@ -25,9 +25,9 @@ I do this project mostly to improve my coding and organization abilities.
 - Generate new markets every round
 - implement basic AI player behaviour(Rather stupid)
 - Add eslint configuration 
+- marketvalue calculations should be based on planet markets
 
 ## Todo
 - Add scenario mechanism
 - A reactive webapp implementing the game
 - Adapt CLI console.table to only show necessary info
-- marketvalue calculations should be based on planet markets
