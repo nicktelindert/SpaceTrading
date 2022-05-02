@@ -29,5 +29,7 @@ I do this project mostly to improve my coding and organization abilities.
 
 ## Todo
 - Add scenario mechanism
+- round marketvalue
+- read 
 - A reactive webapp implementing the game
 - Adapt CLI console.table to only show necessary info
