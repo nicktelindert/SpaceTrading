@@ -27,9 +27,9 @@ I do this project mostly to improve my coding and organization abilities.
 - Add eslint configuration 
 - marketvalue calculations should be based on planet markets
 
+## In Progress
+- A reactive webapp implementing the game
+
 ## Todo
 - Add scenario mechanism
 - round marketvalue
-- read 
-- A reactive webapp implementing the game
-- Adapt CLI console.table to only show necessary info
