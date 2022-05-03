@@ -28,8 +28,10 @@ I do this project mostly to improve my coding and organization abilities.
 - marketvalue calculations should be based on planet markets
 
 ## In Progress
-- A reactive webapp implementing the game
+- A reactive webapp implementing the game - prio 2
 
 ## Todo
+- Create basic html/css interface - prio 1
 - Add scenario mechanism
-- round marketvalue
+- round marketvalue - prio 1
+- Add clone function to ship - prio 1
