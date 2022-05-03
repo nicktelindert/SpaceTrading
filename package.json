@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage --verbose ./tests",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage --verbose ./src/tests",
     "lint:fix": "eslint . --fix --ext .js"
   },
   "type": "module",

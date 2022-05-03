@@ -1,4 +1,4 @@
-import {generateMinMaxNumber} from '../utils/numbers.js';
+import {generateMinMaxNumber} from '../composables/utils/numbers.js';
 
 
 test('generateMinMaxNumber should generate a number between 1 and 10', () => {

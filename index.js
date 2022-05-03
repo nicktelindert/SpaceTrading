@@ -1,8 +1,8 @@
 import * as readline from 'readline';
-import {createNewGame, buyProduct, sellProduct, startRound, endRound, startGame, round} from './models/game.js';
-import {getShipList} from './models/ship.js';
-import {getPlanetList, getCurrentPlanet, getMarketValue} from './models/planet.js';
-import {getPlayerList, getHumanPlayer} from './models/player.js';
+import {createNewGame, buyProduct, sellProduct, startRound, endRound, startGame, round} from './src/composables/models/game.js';
+import {getShipList} from './src/composables/models/ship.js';
+import {getPlanetList, getCurrentPlanet, getMarketValue} from './src/composables/models/planet.js';
+import {getPlayerList, getHumanPlayer} from './src/composables/models/player.js';
 
 const planetList = getPlanetList();
 const players = getPlayerList();

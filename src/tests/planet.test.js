@@ -1,4 +1,4 @@
-import {getPlanetList, setCurrentPlanet, getCurrentPlanet, getMarketProductByName, getMarketValue} from '../models/planet.js';
+import {getPlanetList, setCurrentPlanet, getCurrentPlanet, getMarketProductByName, getMarketValue} from '../composables/models/planet.js';
 
 const planets = getPlanetList();
 const productName = 'Purple Bananas';

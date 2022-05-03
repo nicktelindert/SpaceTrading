@@ -1,5 +1,5 @@
-import {getPlayerList, getHumanPlayer, createNewPlayer, checkForWinners, getNonHumanPlayers} from '../models/player.js';
-import {purchaseShip, addProductToCargo, removeProductFromCargo, updateProductQuantityInCargo} from '../models/ship.js';
+import {getPlayerList, getHumanPlayer, createNewPlayer, checkForWinners, getNonHumanPlayers} from '../composables/models/player.js';
+import {purchaseShip, addProductToCargo, removeProductFromCargo, updateProductQuantityInCargo} from '../composables/models/ship.js';
 
 const playerList = getPlayerList();
 

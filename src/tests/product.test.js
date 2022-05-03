@@ -1,4 +1,4 @@
-import {generateProductList, getMarketValuePrice, getMarketValues, getMarketValue} from '../models/product.js';
+import {generateProductList, getMarketValuePrice, getMarketValues, getMarketValue} from '../composables/models/product.js';
 
 test('product list should return an array of length 10', () => {
   const productList = generateProductList();

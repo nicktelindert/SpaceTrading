@@ -64,7 +64,7 @@ const getMarketValue = (name) => {
     }
   });
 
-  return value/planetList.length;
+  return Math.round(value/planetList.length);
 };
 
 export {getPlanetList, setCurrentPlanet, getCurrentPlanet, getMarketProductByName, getMarketValue};

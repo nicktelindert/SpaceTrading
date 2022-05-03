@@ -1,4 +1,4 @@
-import {purchaseShip, getShipList, updateCapacity} from '../models/ship.js';
+import {purchaseShip, getShipList, updateCapacity} from '../composables/models/ship.js';
 
 test('purchaseShip should be defined', () => {
   const ship = purchaseShip('SteamRocket V1');

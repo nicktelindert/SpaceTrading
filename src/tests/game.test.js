@@ -1,6 +1,6 @@
-import {buyProduct, sellProduct, createNewGame, round, startGame, endRound, startRound, letAiPlay} from '../models/game.js';
-import {purchaseShip} from '../models/ship.js';
-import {getPlayerList, getHumanPlayer} from '../models/player.js';
+import {buyProduct, sellProduct, createNewGame, round, startGame, endRound, startRound, letAiPlay} from '../composables/models/game.js';
+import {purchaseShip} from '../composables/models/ship.js';
+import {getPlayerList, getHumanPlayer} from '../composables/models/player.js';
 const productName = 'Purple Bananas';
 
 createNewGame('Player One', purchaseShip('SteamRocket V1'));

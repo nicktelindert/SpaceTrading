@@ -33,28 +33,12 @@ const purchaseShip = (name) => {
   if (name) {
     const ship = ships.filter(((val) => val.name === name));
     if (ship.length ===1) {
-        return {
-            name: ship[0].name,
-            cargo: ship[0].cargo,
-            capacity: ship[0].totalCapacity,
-            price: ship[0].price,
-            totalCapacity: ship[0].totalCapacity,
-            usedCapacity: 0
-        }
-
+      return JSON.parse(JSON.stringify(ship[0]))
     }
   } else {
     const ship = ships[generateMinMaxNumber(0, (ships.length-1))];
     if (ship) {
-        return {
-            name: ship.name,
-            cargo: ship.cargo,
-            price: ship.price,
-            capacity: ship.totalCapacity,
-            totalCapacity: ship.totalCapacity,
-            usedCapacity: 0
-        }
-
+        return JSON.parse(JSON.stringify(ship))
     }
   }
 };

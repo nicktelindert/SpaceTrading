@@ -26,6 +26,8 @@ I do this project mostly to improve my coding and organization abilities.
 - implement basic AI player behaviour(Rather stupid)
 - Add eslint configuration 
 - marketvalue calculations should be based on planet markets
+- round marketvalue - prio 1
+- Add clone function to ship - prio 1
 
 ## In Progress
 - A reactive webapp implementing the game - prio 2
@@ -33,5 +35,3 @@ I do this project mostly to improve my coding and organization abilities.
 ## Todo
 - Create basic html/css interface - prio 1
 - Add scenario mechanism
-- round marketvalue - prio 1
-- Add clone function to ship - prio 1
