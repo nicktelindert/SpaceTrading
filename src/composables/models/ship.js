@@ -18,6 +18,7 @@ const getShipList = () => {
       newShip.cargo = [];
       newShip.price = generateMinMaxNumber(10000, 15000);
       newShip.totalCapacity = generateMinMaxNumber(100, 150);
+      newShip.capacity = newShip.totalCapacity
       newShip.usedCapacity = 0;
       ships.push(newShip);
     });

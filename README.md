@@ -30,8 +30,8 @@ I do this project mostly to improve my coding and organization abilities.
 - Add clone function to ship - prio 1
 
 ## In Progress
-- A reactive webapp implementing the game - prio 2
+- A reactive webapp implementing the game(Basic game implementation is done)
+- Create basic html/css interface(CSS needs to be optimized)
 
 ## Todo
-- Create basic html/css interface - prio 1
 - Add scenario mechanism

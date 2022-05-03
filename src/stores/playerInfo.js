@@ -4,11 +4,13 @@ export const usePlayerInfoStore = defineStore({
   id: 'playerInfo',
   state: () => ({
     name: '',
-    ship: {}
+    ship: {},
+    balance: null
   }),
   getters: {
     playerName: (state) => state.name,
-    playerShip: (state) => state.ship
+    playerShip: (state) => state.ship,
+    playerBalance: (state) => state.balance
   },
   actions: {
     setPlayerName (name) {
@@ -16,6 +18,9 @@ export const usePlayerInfoStore = defineStore({
     },
     setPlayerShip (ship) {
         this.ship = ship
+    },
+    setPlayerBalance (balance) {
+      this.balance = balance
     }
   }
 })
