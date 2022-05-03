@@ -1,6 +1,5 @@
 <script setup>
 import {buyProduct, sellProduct, endRound} from '@/composables/models/game.js';
-import router from '@/router'
 import {getPlanetList, getCurrentPlanet, getMarketValue} from '@/composables/models/planet.js';
 import {getHumanPlayer} from '@/composables/models/player.js';
 import { ref } from 'vue';
@@ -9,16 +8,12 @@ import { ref } from 'vue';
  let selectProduct = ref('')
  let amount = ref()
 
- const nextStep = () => {
-     endRound()
-     router.push('/next-round')
- }
+
 </script>
 
 <template>
     <h1>{{ getCurrentPlanet().name}} Market</h1>
     <p>Free cargo space: {{ me.ship.capacity }} ton</p>
-    <a @click.prevent="nextStep()" class="button">Next round</a>
     <template v-if="selectProduct !== ''">
         <p> How much of {{selectProduct}} do you want to buy?</p>
         <input name="amount" v-model="amount" type="number"/>

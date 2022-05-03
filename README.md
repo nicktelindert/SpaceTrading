@@ -28,19 +28,22 @@ I do this project mostly to improve my coding and organization abilities.
 - marketvalue calculations should be based on planet markets
 - round marketvalue - prio 1
 - Add clone function to ship - prio 1
+- Diffent planet image using planet name for PNG
+- Implement artwork for ship selection
 
 ## In Progress
 - A reactive webapp implementing the game(Basic game implementation is done)
 - Create basic html/css interface(CSS needs to be optimized)
 
 ## Todo
-- Implement artwork for ship selection
-- Diffent planet image using planet name for PNG
+- Add css to show when a ship is selected
+- css to show when a button is clicked 
 
 ### Future ideas
 - Add scenario mechanism
 - Add space sounds
-- 
+- Planet profiles 
+- Animations
 
 ## Technical notes
 

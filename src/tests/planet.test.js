@@ -21,5 +21,5 @@ test('getMarketProductByName should return the right product', () => {
 
 test('getMarketValue should return a value', () => {
   setCurrentPlanet('Xena');
-  expect(getMarketValue(productName)).toBeGreaterThanOrEqual(1)
+  expect(getMarketValue(productName)).toBeGreaterThanOrEqual(1);
 });
