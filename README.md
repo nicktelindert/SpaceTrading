@@ -12,7 +12,7 @@ I do this project mostly to improve my coding and organization abilities.
 - planets can be generated
 - AI players can be generated
 - a new "Game" can be created with all the necessary entities
-- Everything is fully unit tested with JEST(>90%)
+- Everything is fully tested with JEST(>90%)
 - CLI Basic game(In progress)
 - Buying mechanism
 - Player stats are visible
@@ -34,4 +34,30 @@ I do this project mostly to improve my coding and organization abilities.
 - Create basic html/css interface(CSS needs to be optimized)
 
 ## Todo
+- Implement artwork for ship selection
+- Diffent planet image using planet name for PNG
+
+### Future ideas
 - Add scenario mechanism
+- Add space sounds
+- 
+
+## Technical notes
+
+### WebApp color palette
+- HEX: #c8c3cc
+- HEX: #563f46
+- HEX: #8ca3a3
+- HEX: #484f4f
+- HEX: #e0e2e4
+
+### Frontend
+- Build using vue3/vite
+
+### Game logic
+- Build using javascript
+- Tested using JEST
+
+### Notes
+The writting tests are Integration tests which test the complete game logic and should not really be considered Unit Tests.
+I will need to do some research how to mock my current code so i can do decent unit testing.
