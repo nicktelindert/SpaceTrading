@@ -11,5 +11,7 @@
         "sourceType": "module"
     },
     "rules": {
+        "max-len": 0
     }
+    
 }
