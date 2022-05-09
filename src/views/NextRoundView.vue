@@ -21,7 +21,7 @@
         <span>{{ player.ship.name }}</span>
         <span>{{ player.balance }}</span>
     </div>
-    <router-link class="button" to='/step-3'>To infinity and beyond</router-link>
+    <router-link class="button" to='/select-planet'>To infinity and beyond</router-link>
 </template>
 
 

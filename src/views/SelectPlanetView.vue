@@ -12,7 +12,7 @@ const me = getHumanPlayer();
 const planets = getPlanetList();
 const selectPlanet = (planetName) => {
   startRound(planetName);
-  router.push("/step-4");
+  router.push("/welcome-to-planet");
 };
 </script>
 

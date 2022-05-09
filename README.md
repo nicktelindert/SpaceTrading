@@ -30,14 +30,19 @@ I do this project mostly to improve my coding and organization abilities.
 - Add clone function to ship - prio 1
 - Diffent planet image using planet name for PNG
 - Implement artwork for ship selection
+- More logical route names
+- Add css to show when a ship is selected
+- Add CSS to hover buttons
+- PlayerInfo bar improved css(No weird position changes)
 
 ## In Progress
 - A reactive webapp implementing the game(Basic game implementation is done)
 - Create basic html/css interface(CSS needs to be optimized)
 
 ## Todo
-- Add css to show when a ship is selected
 - css to show when a button is clicked 
+- Add mock modules
+- Add graphics credits
 
 ### Future ideas
 - Add scenario mechanism

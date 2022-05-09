@@ -28,13 +28,15 @@ const nextStep = () => {
   <header>
     <div class="container">
       <div class="header">
-        <h1>SpaceTrading</h1>
+       <h1>SpaceTrading</h1>
       </div>
       <div class="playerInfo block">
         <span v-if="playerBalance > 0" class="balance">Balance: {{ playerBalance }}</span>
-        <span v-if="playerName" class="playerName"
-          >Player: {{ playerName }}</span>
-        <a href="#" v-if="currentRoute === '/market'" @click="nextStep()">Next Round</a>
+        <span v-else class="balance">Balance: 0</span> 
+        <span v-if="playerName" class="playerName">Player: {{ playerName }}</span>
+        <span v-else class="playerName">Player: Unknown</span>
+        <a v-if="currentRoute === '/market'" href="#" @click="nextStep()">Next Round</a>
+        <a v-else href="#" class="disabled">Next Round</a>
       </div>
       <div class="content">
         <router-view />
@@ -56,14 +58,18 @@ body {
 }
 
 .playerInfo {
-  height: 45px;
-  padding: 32px;
-  display: grid;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  justify-items: center;
-  grid-template-columns: repeat(3,1fr);
+  height: 45px;
+  padding: 16px 32px 16px 32px;
 }
 
+.playerInfo a {
+    color: #e0e2e4;
+    font-weight: bold;
+} 
 a,
 h1,
 h2,
@@ -129,9 +135,11 @@ a.button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 10rem;
+  max-width: 18rem;
   height: 3rem;
   color: #e0e2e4;
+  text-decoration: none;
+  font-size: 16pt;
 }
 
 .table {
@@ -165,6 +173,14 @@ input {
 
 a.active {
   opacity: 0.4;
+}
+
+a.disabled {
+ opacity: 0.3;
+}
+
+a.button:hover {
+    background-color: #484f4f;
 }
 
 </style>

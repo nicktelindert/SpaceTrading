@@ -1,7 +1,7 @@
-import StepOneView from '@/views/StepOneView.vue';
-import StepTwoView from '@/views/StepTwoView.vue';
-import StepThreeView from '@/views/StepThreeView.vue';
-import StepFourView from '@/views/StepFourView.vue';
+import NewGameView from '@/views/NewGameView.vue';
+import PlayerOverviewView from '@/views/PlayerOverviewView.vue';
+import SelectPlanetView from '@/views/SelectPlanetView.vue';
+import WelcomeToPlanetView from '@/views/WelcomeToPlanetView.vue';
 import MarketView from '@/views/MarketView.vue';
 import NextRoundView from '@/views/NextRoundView.vue';
 import HomeView from '@/views/HomeView.vue';
@@ -10,10 +10,10 @@ import {usePlayerInfoStore} from '@/stores/playerInfo.js';
 
 const routes = [
   {path: '/', component: HomeView},
-  {path: '/step-1', component: StepOneView},
-  {path: '/step-2', component: StepTwoView},
-  {path: '/step-3', component: StepThreeView},
-  {path: '/step-4', component: StepFourView},
+  {path: '/new-game', component: NewGameView},
+  {path: '/player-overview', component: PlayerOverviewView},
+  {path: '/select-planet', component: SelectPlanetView},
+  {path: '/welcome-to-planet', component: WelcomeToPlanetView},
   {path: '/market', component: MarketView},
   {path: '/next-round', component: NextRoundView},
 ];

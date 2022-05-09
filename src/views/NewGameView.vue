@@ -24,7 +24,7 @@ const saveOptions = () => {
     usePlayerInfoStore().playerName,
     usePlayerInfoStore().playerShip
   );
-  router.push("/step-2");
+  router.push("/player-overview");
 };
 </script>
 
@@ -36,19 +36,28 @@ const saveOptions = () => {
   />
   <ul>
     <template v-for="ship in shipList" :key="ship.name">
-      <li v-if="ship.name === shipName">
-        <a class="listImage active" href="#" @click="selectShip(ship.name)"
+      <li v-if="ship.name === shipName" class="listImage">
+        <a class="listImage active" href="#" @click.prevent="selectShip(ship.name)"
           ><img width="128" :src="'images/ships/' + ship.name + '.png'" />
-          <span>{{ ship.name }} ($ {{ ship.price }})</span>
+          <span>{{ ship.name }}</span>
         </a>
+        <span class="price">$ {{ ship.price }}</span>
       </li>
-      <li v-else>
-        <a class="listImage" href="#" @click="selectShip(ship.name)"
+      <li v-else class="listImage">
+        <a class="listImage" href="#" @click.prevent="selectShip(ship.name)"
           ><img width="128" :src="'images/ships/' + ship.name + '.png'" />
-          <span>{{ ship.name }} ($ {{ ship.price }})</span>
+          <span>{{ ship.name }}</span>
         </a>
+        <span class="price">$ {{ ship.price }}</span>
       </li>
     </template>
   </ul>
   <a href="#" class="button" @click="saveOptions()">Buy ship</a>
 </template>
+
+<style>
+.price {
+    font-style: italic;
+    font-weight: bold;
+}
+</style>

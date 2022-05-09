@@ -13,7 +13,7 @@
         <li v-if="player.ai">{{ player.name }}(AI)</li>
         <li v-else>{{ player.name }}(Me)</li>
     </ul>
-    <router-link class="button" to='/step-3'>Lets travel</router-link>
+    <router-link class="button" to='/select-planet'>Lets travel</router-link>
 </template>
 
 
