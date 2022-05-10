@@ -1,6 +1,6 @@
 import {getPlanetList, getCurrentPlanet, setCurrentPlanet, getMarketProductByName} from './planet.js';
 import {getProductFromCargo, removeProductFromCargo, updateProductQuantityInCargo, addProductToCargo} from './ship.js';
-import {createNewPlayer, checkForWinners, isThereAHumanPlayer, getNonHumanPlayers, updateBalance} from './player.js';
+import {createNewPlayer, checkForWinners, isThereAHumanPlayer, getNonHumanPlayers, updateBalance, updatePlayer} from './player.js';
 import {generateMinMaxNumber} from '../utils/numbers.js';
 import { updateQuantity } from './product.js';
 const financialGoal = 100000;
@@ -39,6 +39,7 @@ const buyProduct = (name, amount, player) => {
       updateBalance(player, -totalPrice);
       updateQuantity(selectedProduct, -amount);
       addProductToCargo(player, amount, totalPrice, selectedProduct.name);
+      updatePlayer(player)
       return true;
     } else {
       return false;
@@ -60,7 +61,7 @@ const sellProduct = (name, amount, player) => {
     getCurrentPlanet().market = getCurrentPlanet().market.filter((val) => val.name !== name);
     updateQuantity(planetProduct, parseInt(amount))
     getCurrentPlanet().market.push(planetProduct);
-
+    updatePlayer(player)
     return true;
   } else {
     return false;

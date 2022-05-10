@@ -73,4 +73,14 @@ const isThereAHumanPlayer = () => {
   return list.filter( (val) => val.ai === false).length >0;
 };
 
-export {getPlayerList, createNewPlayer, getHumanPlayer, isThereAHumanPlayer, checkForWinners, getNonHumanPlayers, updateBalance};
+const updatePlayer = (player) => {
+  let updatedList = list
+  const searchPlayer = list.filter( item => item.name === player.name)
+  if (searchPlayer.length >0) {
+    updatedList = updatedList.filter(item => item.name !== player.name)
+    updatedList.push(player)
+    localStorage.setItem('playerList', JSON.stringify(updatedList))
+  }
+}
+
+export {getPlayerList, createNewPlayer, getHumanPlayer, isThereAHumanPlayer, checkForWinners, getNonHumanPlayers, updateBalance, updatePlayer};
