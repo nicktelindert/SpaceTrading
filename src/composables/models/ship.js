@@ -70,7 +70,7 @@ const updateCapacity = (ship) => {
   ship.cargo.forEach((item) => {
     usedCapacity += parseInt(item.quantity);
   });
-  console.log(ship.totalCapacity, usedCapacity);
+  
   ship.capacity = parseInt(ship.totalCapacity - usedCapacity);
 };
 
