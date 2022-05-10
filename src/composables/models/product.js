@@ -73,5 +73,6 @@ const getMarketValuePrice = (productName) => {
 };
 
 const getMarketValues = () => marketValues;
+const product = {generateProductList, getMarketValue, getMarketValuePrice, getMarketValues, updateQuantity}
 
-export {generateProductList, getMarketValue, getMarketValuePrice, getMarketValues, updateQuantity};
+export default product;

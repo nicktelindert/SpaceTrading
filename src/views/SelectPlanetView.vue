@@ -1,17 +1,13 @@
 <script setup>
 import router from "@/router";
-import { startRound } from "@/composables/models/game.js";
-import {
-  getPlanetList,
-  getCurrentPlanet,
-  getMarketValue,
-} from "@/composables/models/planet.js";
-import { getPlayerList, getHumanPlayer } from "@/composables/models/player.js";
-const players = getPlayerList();
-const me = getHumanPlayer();
-const planets = getPlanetList();
+import game from "@/composables/models/game.js";
+import planet from "@/composables/models/planet.js";
+import player from "@/composables/models/player.js";
+const players = player.getPlayerList();
+const me = player.getHumanPlayer();
+const planets = planet.getPlanetList();
 const selectPlanet = (planetName) => {
-  startRound(planetName);
+  game.startRound(planetName);
   router.push("/welcome-to-planet");
 };
 </script>

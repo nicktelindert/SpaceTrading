@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from "vue";
-import {getHumanPlayer} from '@/composables/models/player.js';
-import {endRound} from '@/composables/models/game.js'
+import player from '@/composables/models/player.js';
+import game from '@/composables/models/game.js'
 import { useRouter } from 'vue-router';
 import router from '@/router'
 
@@ -10,21 +10,21 @@ const currentRoute = computed(() => {
 })
 
 const playerName = computed(() => {
-  const player = getHumanPlayer()
-  if (player) {
-      return player.name
+  const human = player.getHumanPlayer()
+  if (human) {
+      return human.name
   }
 });
 
 const playerBalance = computed(() => {
-  const player = getHumanPlayer()
-  if (player) {
-      return player.balance
+  const human = player.getHumanPlayer()
+  if (human) {
+      return human.balance
   }
 });
 
 const nextStep = () => {
-  endRound()
+  game.endRound()
   router.push('/next-round')
 }
 </script>

@@ -1,4 +1,5 @@
-import {purchaseShip} from './ship.js';
+import { def } from '@vue/shared';
+import ship from './ship.js';
 
 const names = [
   'Mars Trading inc.',
@@ -34,7 +35,7 @@ const createNewPlayer = (ship, playerName) => {
 const getPlayerList = () => {
   if (list.length <=1) {
     for (let t=0; t < 4; t++) {
-      createNewPlayer(purchaseShip());
+      createNewPlayer(ship.purchaseShip());
     }
 
   }
@@ -83,4 +84,8 @@ const updatePlayer = (player) => {
   }
 }
 
-export {getPlayerList, createNewPlayer, getHumanPlayer, isThereAHumanPlayer, checkForWinners, getNonHumanPlayers, updateBalance, updatePlayer};
+const player = {
+  getPlayerList, createNewPlayer, getHumanPlayer, isThereAHumanPlayer, checkForWinners, getNonHumanPlayers, updateBalance, updatePlayer
+}
+
+export default player

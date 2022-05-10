@@ -80,4 +80,6 @@ const updateProductQuantityInCargo = (player, name, quantity) => {
   updateCapacity(player.ship);
 };
 
-export {purchaseShip, getShipList, getProductFromCargo, addProductToCargo, removeProductFromCargo, updateProductQuantityInCargo, updateCapacity};
+const ship = {purchaseShip, getShipList, getProductFromCargo, addProductToCargo, removeProductFromCargo, updateProductQuantityInCargo, updateCapacity};
+
+export default ship;
