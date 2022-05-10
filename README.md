@@ -38,17 +38,26 @@ I do this project mostly to improve my coding and organization abilities.
 ## In Progress
 - A reactive webapp implementing the game(Basic game implementation is done)
 - Create basic html/css interface(CSS needs to be optimized)
+- Add graphics credits
 
 ## Todo
 - css to show when a button is clicked 
 - Add mock modules
-- Add graphics credits
 
 ### Future ideas
 - Add scenario mechanism
 - Add space sounds
 - Planet profiles 
 - Animations
+
+## Credits
+None of the graphics are made by me, i suck at graphical design:). 
+
+### Planet graphics
+Source: https://opengameart.org/content/2d-planets-0
+
+### Spaceship graphics
+Source: https://opengameart.org/content/space-ships-side-scroller
 
 ## Technical notes
 
@@ -65,6 +74,7 @@ I do this project mostly to improve my coding and organization abilities.
 ### Game logic
 - Build using javascript
 - Tested using JEST
+
 
 ### Notes
 The writting tests are Integration tests which test the complete game logic and should not really be considered Unit Tests.
