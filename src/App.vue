@@ -9,7 +9,6 @@ const currentRoute = computed(() => {
       return useRouter().currentRoute.value.path;
 })
 
-console.log(currentRoute.value)
 const playerName = computed(() => {
   return usePlayerInfoStore().playerName;
 });
