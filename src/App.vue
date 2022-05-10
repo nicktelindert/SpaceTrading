@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from "vue";
-import { usePlayerInfoStore } from "@/stores/playerInfo";
+import {getHumanPlayer} from '@/composables/models/player.js';
 import {endRound} from '@/composables/models/game.js'
 import { useRouter } from 'vue-router';
 import router from '@/router'
@@ -10,11 +10,17 @@ const currentRoute = computed(() => {
 })
 
 const playerName = computed(() => {
-  return usePlayerInfoStore().playerName;
+  const player = getHumanPlayer()
+  if (player) {
+      return player.name
+  }
 });
 
 const playerBalance = computed(() => {
-  return usePlayerInfoStore().playerBalance;
+  const player = getHumanPlayer()
+  if (player) {
+      return player.balance
+  }
 });
 
 const nextStep = () => {

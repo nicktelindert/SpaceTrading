@@ -1,8 +1,8 @@
 import {getPlanetList, getCurrentPlanet, setCurrentPlanet, getMarketProductByName} from './planet.js';
 import {getProductFromCargo, removeProductFromCargo, updateProductQuantityInCargo, addProductToCargo} from './ship.js';
-import {createNewPlayer, checkForWinners, isThereAHumanPlayer, getNonHumanPlayers} from './player.js';
+import {createNewPlayer, checkForWinners, isThereAHumanPlayer, getNonHumanPlayers, updateBalance} from './player.js';
 import {generateMinMaxNumber} from '../utils/numbers.js';
-
+import { updateQuantity } from './product.js';
 const financialGoal = 100000;
 let game = 0;
 let round = 0;
@@ -36,8 +36,8 @@ const buyProduct = (name, amount, player) => {
   if (selectedProduct) {
     const totalPrice = amount * selectedProduct.price;
     if (totalPrice < player.balance) {
-      player.updateBalance(-totalPrice);
-      selectedProduct.updateQuantity(-amount);
+      updateBalance(player, -totalPrice);
+      updateQuantity(selectedProduct, -amount);
       addProductToCargo(player, amount, totalPrice, selectedProduct.name);
       return true;
     } else {
@@ -51,14 +51,14 @@ const sellProduct = (name, amount, player) => {
   const planetProduct = getMarketProductByName(name);
   if (selectedProduct && amount <= selectedProduct.quantity && planetProduct) {
     const totalPrice = amount * planetProduct.price;
-    player.updateBalance(totalPrice);
+    updateBalance(player, totalPrice);
     if (amount < selectedProduct.quantity) {
       updateProductQuantityInCargo(player, name, parseInt(selectedProduct.quantity - amount));
     } else {
       removeProductFromCargo(player, name);
     }
     getCurrentPlanet().market = getCurrentPlanet().market.filter((val) => val.name !== name);
-    planetProduct.updateQuantity(parseInt(amount));
+    updateQuantity(planetProduct, parseInt(amount))
     getCurrentPlanet().market.push(planetProduct);
 
     return true;

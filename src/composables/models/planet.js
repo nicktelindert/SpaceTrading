@@ -9,7 +9,7 @@ const names = [
   'Neoptolemus',
 ];
 
-let currentPlanet;
+let currentPlanet = localStorage.getItem('currentPlanet') ? JSON.parse(localStorage.getItem('currentPlanet')) : []
 let planetList = [];
 const generatePlanet = (planetName) => {
   if (planetName) {
@@ -28,7 +28,7 @@ const setCurrentPlanet = (planetName) => {
   }
   const filter = planetList.filter((val) => val.name === planetName);
   if (filter.length === 1) {
-    currentPlanet = filter[0];
+    localStorage.setItem('currentPlanet', JSON.stringify(filter[0]))
   }
 };
 

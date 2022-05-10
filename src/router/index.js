@@ -6,7 +6,7 @@ import MarketView from '@/views/MarketView.vue';
 import NextRoundView from '@/views/NextRoundView.vue';
 import HomeView from '@/views/HomeView.vue';
 import {createWebHistory, createRouter} from 'vue-router';
-import {usePlayerInfoStore} from '@/stores/playerInfo.js';
+import {getHumanPlayer} from '@/composables/models/player.js';
 
 const routes = [
   {path: '/', component: HomeView},
@@ -24,8 +24,10 @@ const router = createRouter({
 });
 
 router.beforeEach((to, name)=> {
-  const checkPaths = ['/step-2', '/step-3', '/step-4', '/market', '/next-round'];
-  if (checkPaths.filter((val) => val === to.path).length > 0 && usePlayerInfoStore().playerName === '') {
+  const checkPaths = ['/welcome-to-planet', '/select-planet', '/player-overview', '/market', '/next-round'];
+  const player = getHumanPlayer()
+
+  if (checkPaths.filter((val) => val === to.path).length > 0 && !player) {
     return '/';
   }
 });
