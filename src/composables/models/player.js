@@ -1,4 +1,3 @@
-import { def } from '@vue/shared';
 import ship from './ship.js';
 
 const names = [
@@ -8,7 +7,7 @@ const names = [
   'DollarSigns Inc.',
 ];
 
-const list = localStorage.getItem('playerList') ? JSON.parse(localStorage.getItem('playerList')) : []
+const list = localStorage.getItem('playerList') ? JSON.parse(localStorage.getItem('playerList')) : [];
 
 const createNewPlayer = (ship, playerName) => {
   if (ship) {
@@ -27,7 +26,7 @@ const createNewPlayer = (ship, playerName) => {
       balance: 50000 - ship.price,
       ship: ship,
     });
-    localStorage.setItem('playerList', JSON.stringify(list))
+    localStorage.setItem('playerList', JSON.stringify(list));
   }
 };
 
@@ -37,7 +36,6 @@ const getPlayerList = () => {
     for (let t=0; t < 4; t++) {
       createNewPlayer(ship.purchaseShip());
     }
-
   }
 
   return list;
@@ -45,7 +43,7 @@ const getPlayerList = () => {
 
 const updateBalance = (player, sum) => {
   player.balance = parseInt(player.balance) + parseInt(sum);
-}
+};
 
 const checkForWinners = (currentGoal) => {
   const players = list.filter((player) => player.balance >= currentGoal);
@@ -75,17 +73,17 @@ const isThereAHumanPlayer = () => {
 };
 
 const updatePlayer = (player) => {
-  let updatedList = list
-  const searchPlayer = list.filter( item => item.name === player.name)
+  let updatedList = list;
+  const searchPlayer = list.filter( (item) => item.name === player.name);
   if (searchPlayer.length >0) {
-    updatedList = updatedList.filter(item => item.name !== player.name)
-    updatedList.push(player)
-    localStorage.setItem('playerList', JSON.stringify(updatedList))
+    updatedList = updatedList.filter((item) => item.name !== player.name);
+    updatedList.push(player);
+    localStorage.setItem('playerList', JSON.stringify(updatedList));
   }
-}
+};
 
 const player = {
-  getPlayerList, createNewPlayer, getHumanPlayer, isThereAHumanPlayer, checkForWinners, getNonHumanPlayers, updateBalance, updatePlayer
-}
+  getPlayerList, createNewPlayer, getHumanPlayer, isThereAHumanPlayer, checkForWinners, getNonHumanPlayers, updateBalance, updatePlayer,
+};
 
-export default player
+export default player;

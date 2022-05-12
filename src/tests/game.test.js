@@ -2,33 +2,43 @@ import game from '../composables/models/game.js';
 import ship from '../composables/models/ship.js';
 import player from '../composables/models/player.js';
 const productName = 'Purple Bananas';
-import {jest} from '@jest/globals'
-import planet from '../composables/models/planet'
+import {jest} from '@jest/globals';
+import planet from '../composables/models/planet';
 
-planet.getCurrentPlanet = (() => { return {
-  'name': 'Xena',
-  'market': []
-}})
-
-ship.purchaseShip = jest.fn().mockReturnValue({
+const shipModel = {
   'name': 'Ship',
-   cargo: [],
-   capacity: 100,
-   capacityUsed: 0,
-   capacityFull: 100
-})
+  'cargo': [],
+  'capacity': 100,
+  'capacityUsed': 0,
+  'capacityFull': 100,
+};
+
+planet.getCurrentPlanet = (() => {
+  return {
+    'name': 'Xena',
+    'market': [],
+  };
+});
+
+planet.getMarketProductByName = jest.fn().mockReturnValue({
+  name: productName,
+  price: 123,
+});
+
+ship.purchaseShip = jest.fn().mockReturnValue(shipModel);
 
 
 player.getHumanPlayer = jest.fn().mockReturnValue({
   'name': 'Player',
   'ai': false,
-  'balance': 20000
-})
+  'balance': 20000,
+  'ship': shipModel,
+});
 
 player.getPlayerList = jest.fn().mockReturnValue([{
   'name': 'Computer',
-  'ai': true
-}])
+  'ai': true,
+}]);
 
 game.createNewGame('Player One', ship.purchaseShip('Ship'));
 test('Game round should be equal to 0', () => {

@@ -27,7 +27,7 @@ const generateProductList = () => {
       name: productName,
       price: price,
       totalPrice: price * quantity,
-      quantity: quantity
+      quantity: quantity,
     });
   });
   return list;
@@ -35,7 +35,7 @@ const generateProductList = () => {
 
 const updateQuantity = (product, amount) => {
   product.quantity = product.quantity + amount;
-}
+};
 
 const recalculateMarketValue = (productName, price) => {
   const currentValue = getMarketValue(productName);
@@ -73,6 +73,6 @@ const getMarketValuePrice = (productName) => {
 };
 
 const getMarketValues = () => marketValues;
-const product = {generateProductList, getMarketValue, getMarketValuePrice, getMarketValues, updateQuantity}
+const product = {generateProductList, getMarketValue, getMarketValuePrice, getMarketValues, updateQuantity};
 
 export default product;

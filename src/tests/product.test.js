@@ -1,25 +1,28 @@
-import {generateProductList, getMarketValuePrice, getMarketValues, getMarketValue} from '../composables/models/product.js';
+import product from '../composables/models/product.js';
 
 test('product list should return an array of length 10', () => {
-  const productList = generateProductList();
+  const productList = product.generateProductList();
   expect(productList).toHaveLength(10);
-  console.table(productList);
 });
 
 test('Expect getMarketValuePrice to be bigger than 0', () => {
-  generateProductList();
-  expect(getMarketValuePrice('Purple Bananas')).toBeGreaterThanOrEqual(0);
+  product.generateProductList();
+  expect(product.getMarketValuePrice('Purple Bananas')).toBeGreaterThanOrEqual(0);
 });
 
+test('Expect getMarketValuePrice to be 0', () => {
+  product.generateProductList();
+  expect(product.getMarketValuePrice('green banana')).toEqual(0);
+});
+
+
 test('Expect getMarketValue to be an object', () => {
-  generateProductList();
-  expect(getMarketValue('Purple Bananas')).toBeInstanceOf(Object);
+  product.generateProductList();
+  expect(product.getMarketValue('Purple Bananas')).toBeInstanceOf(Object);
 });
 
 test('Expect getMarketValues to be an array of length 10', () => {
-  generateProductList();
-  generateProductList();
-  const marketValues = getMarketValues();
-  console.table(marketValues);
+  product.generateProductList();
+  const marketValues = product. getMarketValues();
   expect(marketValues).toHaveLength(10);
 });

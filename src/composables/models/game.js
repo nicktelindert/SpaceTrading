@@ -39,7 +39,7 @@ const buyProduct = (name, amount, human) => {
       player.updateBalance(human, -totalPrice);
       product.updateQuantity(selectedProduct, -amount);
       ship.addProductToCargo(human, amount, totalPrice, selectedProduct.name);
-      player.updatePlayer(human)
+      player.updatePlayer(human);
       return true;
     } else {
       return false;
@@ -59,9 +59,9 @@ const sellProduct = (name, amount, human) => {
       ship.removeProductFromCargo(human, name);
     }
     planet.getCurrentPlanet().market = planet.getCurrentPlanet().market.filter((val) => val.name !== name);
-    product.updateQuantity(planetProduct, parseInt(amount))
+    product.updateQuantity(planetProduct, parseInt(amount));
     planet.getCurrentPlanet().market.push(planetProduct);
-    player.updatePlayer(human)
+    player.updatePlayer(human);
     return true;
   } else {
     return false;
@@ -106,7 +106,7 @@ const letAiPlay = () => {
 };
 
 const game = {
-  createNewGame, gameNumber, round, startGame, letAiPlay, startRound, endRound, buyProduct, sellProduct
-}
+  createNewGame, gameNumber, round, startGame, letAiPlay, startRound, endRound, buyProduct, sellProduct,
+};
 
-export default game
+export default game;

@@ -9,7 +9,7 @@ const names = [
   'Neoptolemus',
 ];
 
-let currentPlanet = localStorage.getItem('currentPlanet') ? JSON.parse(localStorage.getItem('currentPlanet')) : []
+let currentPlanet = localStorage.getItem('currentPlanet') ? JSON.parse(localStorage.getItem('currentPlanet')) : [];
 let planetList = [];
 const generatePlanet = (planetName) => {
   if (planetName) {
@@ -28,12 +28,12 @@ const setCurrentPlanet = (planetName) => {
   }
   const filter = planetList.filter((val) => val.name === planetName);
   if (filter.length === 1) {
-    localStorage.setItem('currentPlanet', JSON.stringify(filter[0]))
+    currentPlanet = filter[0];
+    localStorage.setItem('currentPlanet', JSON.stringify(filter[0]));
   }
 };
 
 const getMarketProductByName = (name) => {
-  console.log(getCurrentPlanet())
   const searchProduct = getCurrentPlanet().market.filter((val) => val.name === name);
   if (searchProduct[0]) {
     return searchProduct[0];
@@ -69,7 +69,7 @@ const getMarketValue = (name) => {
 };
 
 const planet = {
-  getPlanetList, setCurrentPlanet, getCurrentPlanet, getMarketProductByName, getMarketValue
-}
+  getPlanetList, setCurrentPlanet, getCurrentPlanet, getMarketProductByName, getMarketValue,
+};
 
-export default planet
+export default planet;

@@ -1,4 +1,4 @@
-// import {purchaseShip, getShipList, updateCapacity} from '../composables/models/ship.js';
+//import {purchaseShip, getShipList, updateCapacity} from '../composables/models/ship.js';
 import ship from '../composables/models/ship.js';
 
 test('purchaseShip should be defined', () => {
@@ -18,7 +18,7 @@ test('Ship list should contain 3 ships', () => {
 test('updateCapacity should decrease cargo bij 100', () => {
   const shipBought = ship.purchaseShip();
   const expectedResult = shipBought.capacity - 100;
-  shipBought.cargo.push({
+  ship.cargo.push({
     quantity: 100,
   });
   ship.updateCapacity(shipBought);

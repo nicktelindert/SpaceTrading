@@ -25,7 +25,7 @@ const router = createRouter({
 
 router.beforeEach((to, name)=> {
   const checkPaths = ['/welcome-to-planet', '/select-planet', '/player-overview', '/market', '/next-round'];
-  const human = player.getHumanPlayer()
+  const human = player.getHumanPlayer();
 
   if (checkPaths.filter((val) => val === to.path).length > 0 && !human) {
     return '/';
