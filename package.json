@@ -4,6 +4,8 @@
   "description": "A space trading game",
   "main": "index.js",
   "scripts": {
+    "preview": "vite preview",	  
+    "build": "vite build",	  
     "dev": "vite",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage --verbose ./src/tests",
     "lint:fix": "eslint . --fix --ext .js"
