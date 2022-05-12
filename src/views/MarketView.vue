@@ -7,11 +7,16 @@ import { ref } from 'vue';
 let selectProductBuy = ref('')
 let amount = ref()
 
-const me = ref(player.getHumanPlayer())
+let me = player.getHumanPlayer()
 
 const buyProductProxy = (selectProduct, amount, me) => {
     game.buyProduct(selectProduct, amount, me)
-    me.value = player.getHumanPlayer()
+    document.location.reload()
+}
+
+const sellProductProxy = (selectProduct, amount, me) => {
+    game.sellProduct(selectProduct, amount, me)
+    document.location.reload()
 }
 
 </script>
@@ -39,7 +44,7 @@ const buyProductProxy = (selectProduct, amount, me) => {
             <span>{{ product.price / product.quantity }}</span>
             <span>{{ planet.getCurrentPlanet().market.filter(val => val.name === product.name)[0].price }}</span>
             <span>{{ product.quantity }}</span>
-            <span><a class="button" href="#" @click.prevent="game.sellProduct(product.name, product.quantity, me)">Sell</a></span>
+            <span><a class="button" href="#" @click.prevent="sellProductProxy(product.name, product.quantity, me)">Sell</a></span>
         </div>
     </div>
     <h2>Product on {{ planet.getCurrentPlanet().name }}</h2>
