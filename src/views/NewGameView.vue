@@ -18,11 +18,11 @@ const setPlayerName = (player) => {
 };
 
 const saveOptions = () => {
-  usePlayerInfoStore().setPlayerShip(ship.purchaseShip(shipName.value));
+  const boughtShip = ship.purchaseShip(shipName.value);
   usePlayerInfoStore().setPlayerName(playerName);
   game.createNewGame(
-    usePlayerInfoStore().playerName,
-    usePlayerInfoStore().playerShip
+      playerName,
+      boughtShip
   );
   router.push("/player-overview");
 };

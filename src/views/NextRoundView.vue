@@ -5,6 +5,8 @@
  const players = player.getPlayerList()
  const me = player.getHumanPlayer()
  usePlayerInfoStore().setPlayerBalance(me.balance)
+ usePlayerInfoStore().setPlayerName(me.name)
+
 </script>
 
 <template>

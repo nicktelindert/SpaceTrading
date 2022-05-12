@@ -1,3 +1,12 @@
+<script setup>
+import player from '@/composables/models/player.js';
+import {usePlayerInfoStore} from '@/stores/playerInfo.js';
+
+let me = player.getHumanPlayer()
+usePlayerInfoStore().setPlayerBalance(me.balance)
+usePlayerInfoStore().setPlayerName(me.name)
+</script>
+
 <template>
 <div class="menu">
     <router-link class="buttonBig" to='/new-game'>Start Game</router-link>

@@ -1,13 +1,16 @@
 <script setup>
+import { ref } from 'vue';
+import {usePlayerInfoStore} from '@/stores/playerInfo.js';
 import game from '@/composables/models/game.js';
 import planet from '@/composables/models/planet.js';
 import player from '@/composables/models/player.js';
-import { ref } from 'vue';
 
 let selectProductBuy = ref('')
 let amount = ref()
 
 let me = player.getHumanPlayer()
+usePlayerInfoStore().setPlayerBalance(me.balance)
+usePlayerInfoStore().setPlayerName(me.name)
 
 const buyProductProxy = (selectProduct, amount, me) => {
     game.buyProduct(selectProduct, amount, me)
