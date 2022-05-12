@@ -1,4 +1,4 @@
-import {generateProductList} from './product.js';
+import product from './product.js';
 
 const names = [
   'Persephone',
@@ -9,13 +9,13 @@ const names = [
   'Neoptolemus',
 ];
 
-let currentPlanet;
+let currentPlanet = localStorage.getItem('currentPlanet') ? JSON.parse(localStorage.getItem('currentPlanet')) : [];
 let planetList = [];
 const generatePlanet = (planetName) => {
   if (planetName) {
     return {
       name: planetName,
-      market: generateProductList(),
+      market: product.generateProductList(),
     };
   }
 
@@ -29,11 +29,12 @@ const setCurrentPlanet = (planetName) => {
   const filter = planetList.filter((val) => val.name === planetName);
   if (filter.length === 1) {
     currentPlanet = filter[0];
+    localStorage.setItem('currentPlanet', JSON.stringify(filter[0]));
   }
 };
 
 const getMarketProductByName = (name) => {
-  const searchProduct = currentPlanet.market.filter((val) => val.name === name);
+  const searchProduct = getCurrentPlanet().market.filter((val) => val.name === name);
   if (searchProduct[0]) {
     return searchProduct[0];
   }
@@ -67,4 +68,8 @@ const getMarketValue = (name) => {
   return Math.round(value/planetList.length);
 };
 
-export {getPlanetList, setCurrentPlanet, getCurrentPlanet, getMarketProductByName, getMarketValue};
+const planet = {
+  getPlanetList, setCurrentPlanet, getCurrentPlanet, getMarketProductByName, getMarketValue,
+};
+
+export default planet;

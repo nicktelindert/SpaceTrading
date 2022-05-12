@@ -1,30 +1,31 @@
-import {purchaseShip, getShipList, updateCapacity} from '../composables/models/ship.js';
+// import {purchaseShip, getShipList, updateCapacity} from '../composables/models/ship.js';
+import ship from '../composables/models/ship.js';
 
 test('purchaseShip should be defined', () => {
-  const ship = purchaseShip('SteamRocket V1');
-  expect(ship).toBeDefined();
+  const shipBought = ship.purchaseShip('SteamRocket V1');
+  expect(shipBought).toBeDefined();
 });
 
 test('purchaseShould should return a random ship when no parameters are entered', () => {
-  const ship = purchaseShip();
-  expect(ship).toBeDefined();
+  const shipBought = ship.purchaseShip();
+  expect(shipBought).toBeDefined();
 });
 
 test('Ship list should contain 3 ships', () => {
-  expect(getShipList()).toHaveLength(3);
+  expect(ship.getShipList()).toHaveLength(3);
 });
 
 test('updateCapacity should decrease cargo bij 100', () => {
-  const ship = purchaseShip();
-  const expectedResult = ship.capacity - 100;
-  ship.cargo.push({
+  const shipBought = ship.purchaseShip();
+  const expectedResult = shipBought.capacity - 100;
+  shipBought.cargo.push({
     quantity: 100,
   });
-  updateCapacity(ship);
-  expect(ship.capacity).toEqual(expectedResult);
+  ship.updateCapacity(shipBought);
+  expect(shipBought.capacity).toEqual(expectedResult);
 });
 
 test('purchaseShip should return the correct ship', () => {
-  const ship = purchaseShip('SteamRocket V1');
-  expect(ship.name).toEqual('SteamRocket V1');
+  const shipBought = ship.purchaseShip('SteamRocket V1');
+  expect(shipBought.name).toEqual('SteamRocket V1');
 });

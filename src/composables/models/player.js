@@ -1,4 +1,4 @@
-import {purchaseShip} from './ship.js';
+import ship from './ship.js';
 
 const names = [
   'Mars Trading inc.',
@@ -7,7 +7,7 @@ const names = [
   'DollarSigns Inc.',
 ];
 
-const list = [];
+const list = localStorage.getItem('playerList') ? JSON.parse(localStorage.getItem('playerList')) : [];
 
 const createNewPlayer = (ship, playerName) => {
   if (ship) {
@@ -25,10 +25,8 @@ const createNewPlayer = (ship, playerName) => {
       ai: ai,
       balance: 50000 - ship.price,
       ship: ship,
-      updateBalance: function(sum) {
-        this.balance = parseInt(this.balance) + parseInt(sum);
-      },
     });
+    localStorage.setItem('playerList', JSON.stringify(list));
   }
 };
 
@@ -36,11 +34,15 @@ const createNewPlayer = (ship, playerName) => {
 const getPlayerList = () => {
   if (list.length <=1) {
     for (let t=0; t < 4; t++) {
-      createNewPlayer(purchaseShip());
+      createNewPlayer(ship.purchaseShip());
     }
   }
 
   return list;
+};
+
+const updateBalance = (player, sum) => {
+  player.balance = parseInt(player.balance) + parseInt(sum);
 };
 
 const checkForWinners = (currentGoal) => {
@@ -70,4 +72,18 @@ const isThereAHumanPlayer = () => {
   return list.filter( (val) => val.ai === false).length >0;
 };
 
-export {getPlayerList, createNewPlayer, getHumanPlayer, isThereAHumanPlayer, checkForWinners, getNonHumanPlayers};
+const updatePlayer = (player) => {
+  let updatedList = list;
+  const searchPlayer = list.filter( (item) => item.name === player.name);
+  if (searchPlayer.length >0) {
+    updatedList = updatedList.filter((item) => item.name !== player.name);
+    updatedList.push(player);
+    localStorage.setItem('playerList', JSON.stringify(updatedList));
+  }
+};
+
+const player = {
+  getPlayerList, createNewPlayer, getHumanPlayer, isThereAHumanPlayer, checkForWinners, getNonHumanPlayers, updateBalance, updatePlayer,
+};
+
+export default player;

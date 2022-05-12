@@ -1,15 +1,15 @@
-import {getPlanetList, getCurrentPlanet, setCurrentPlanet, getMarketProductByName} from './planet.js';
-import {getProductFromCargo, removeProductFromCargo, updateProductQuantityInCargo, addProductToCargo} from './ship.js';
-import {createNewPlayer, checkForWinners, isThereAHumanPlayer, getNonHumanPlayers} from './player.js';
+import planet from './planet.js';
+import ship from './ship.js';
+import player from './player.js';
 import {generateMinMaxNumber} from '../utils/numbers.js';
-
+import product from './product.js';
 const financialGoal = 100000;
-let game = 0;
+let gameNumber = 0;
 let round = 0;
 
 const createNewGame = (playerName, ship) => {
   if (playerName && ship) {
-    createNewPlayer(ship, playerName);
+    player.createNewPlayer(ship, playerName);
   }
 
   round = 1;
@@ -17,28 +17,29 @@ const createNewGame = (playerName, ship) => {
 
 const startGame = (newGame = true) => {
   if (newGame) {
-    game = 1;
+    gameNumber = 1;
   }
 
-  game++;
+  gameNumber++;
 };
 
 const startRound = (planetName) => {
-  getPlanetList(true);
-  setCurrentPlanet(planetName);
+  planet.getPlanetList(true);
+  planet.setCurrentPlanet(planetName);
 };
 
-const buyProduct = (name, amount, player) => {
-  const selectedProduct = getMarketProductByName(name);
-  if (amount > player.ship.capacity) {
+const buyProduct = (name, amount, human) => {
+  const selectedProduct = planet.getMarketProductByName(name);
+  if (amount > human.ship.capacity) {
     return false;
   }
   if (selectedProduct) {
     const totalPrice = amount * selectedProduct.price;
-    if (totalPrice < player.balance) {
-      player.updateBalance(-totalPrice);
-      selectedProduct.updateQuantity(-amount);
-      addProductToCargo(player, amount, totalPrice, selectedProduct.name);
+    if (totalPrice < human.balance) {
+      player.updateBalance(human, -totalPrice);
+      product.updateQuantity(selectedProduct, -amount);
+      ship.addProductToCargo(human, amount, totalPrice, selectedProduct.name);
+      player.updatePlayer(human);
       return true;
     } else {
       return false;
@@ -46,21 +47,21 @@ const buyProduct = (name, amount, player) => {
   }
 };
 
-const sellProduct = (name, amount, player) => {
-  const selectedProduct = getProductFromCargo(player, name);
-  const planetProduct = getMarketProductByName(name);
+const sellProduct = (name, amount, human) => {
+  const selectedProduct = ship.getProductFromCargo(human, name);
+  const planetProduct = planet.getMarketProductByName(name);
   if (selectedProduct && amount <= selectedProduct.quantity && planetProduct) {
     const totalPrice = amount * planetProduct.price;
-    player.updateBalance(totalPrice);
+    player.updateBalance(human, totalPrice);
     if (amount < selectedProduct.quantity) {
-      updateProductQuantityInCargo(player, name, parseInt(selectedProduct.quantity - amount));
+      ship.updateProductQuantityInCargo(human, name, parseInt(selectedProduct.quantity - amount));
     } else {
-      removeProductFromCargo(player, name);
+      ship.removeProductFromCargo(human, name);
     }
-    getCurrentPlanet().market = getCurrentPlanet().market.filter((val) => val.name !== name);
-    planetProduct.updateQuantity(parseInt(amount));
-    getCurrentPlanet().market.push(planetProduct);
-
+    planet.getCurrentPlanet().market = planet.getCurrentPlanet().market.filter((val) => val.name !== name);
+    product.updateQuantity(planetProduct, parseInt(amount));
+    planet.getCurrentPlanet().market.push(planetProduct);
+    player.updatePlayer(human);
     return true;
   } else {
     return false;
@@ -71,9 +72,9 @@ const endRound = () => {
   // 1. Let AI players make some decisions
   letAiPlay();
   if (round === 12) {
-    const goal = financialGoal * game;
-    if (checkForWinners(goal)) {
-      if (!isThereAHumanPlayer()) {
+    const goal = financialGoal * gameNumber;
+    if (player.checkForWinners(goal)) {
+      if (!player.isThereAHumanPlayer()) {
         return false;
       }
     } else {
@@ -86,8 +87,8 @@ const endRound = () => {
 };
 
 const letAiPlay = () => {
-  const planetList = getPlanetList();
-  const nonHumanPlayers = getNonHumanPlayers();
+  const planetList = planet.getPlanetList();
+  const nonHumanPlayers = player.getNonHumanPlayers();
   nonHumanPlayers.forEach((nonHumanPlayer) => {
     if (nonHumanPlayer.ai) {
       const currentPlanet = planetList[generateMinMaxNumber(0, (planetList.length-1))];
@@ -104,4 +105,8 @@ const letAiPlay = () => {
   return true;
 };
 
-export {createNewGame, game, round, startGame, letAiPlay, startRound, endRound, buyProduct, sellProduct};
+const game = {
+  createNewGame, gameNumber, round, startGame, letAiPlay, startRound, endRound, buyProduct, sellProduct,
+};
+
+export default game;

@@ -1,9 +1,9 @@
 <script setup>
- import {getPlayerList, getHumanPlayer} from '@/composables/models/player.js';
+ import player from '@/composables/models/player.js';
  import {usePlayerInfoStore} from '@/stores/playerInfo.js';
 
- const players = getPlayerList()
- const me = getHumanPlayer()
+ const players = player.getPlayerList()
+ const me = player.getHumanPlayer()
  usePlayerInfoStore().setPlayerBalance(me.balance)
 </script>
 

@@ -70,7 +70,7 @@ const updateCapacity = (ship) => {
   ship.cargo.forEach((item) => {
     usedCapacity += parseInt(item.quantity);
   });
-  
+
   ship.capacity = parseInt(ship.totalCapacity - usedCapacity);
 };
 
@@ -80,4 +80,6 @@ const updateProductQuantityInCargo = (player, name, quantity) => {
   updateCapacity(player.ship);
 };
 
-export {purchaseShip, getShipList, getProductFromCargo, addProductToCargo, removeProductFromCargo, updateProductQuantityInCargo, updateCapacity};
+const ship = {purchaseShip, getShipList, getProductFromCargo, addProductToCargo, removeProductFromCargo, updateProductQuantityInCargo, updateCapacity};
+
+export default ship;

@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from "vue";
-import { getShipList, purchaseShip } from "@/composables/models/ship.js";
+import ship from "@/composables/models/ship.js";
 import { usePlayerInfoStore } from "@/stores/playerInfo.js";
-import { createNewGame } from "@/composables/models/game.js";
+import game from "@/composables/models/game.js";
 import router from "@/router";
 
-const shipList = getShipList();
+const shipList = ship.getShipList();
 let shipName = ref("");
 let playerName = "";
 
@@ -18,9 +18,9 @@ const setPlayerName = (player) => {
 };
 
 const saveOptions = () => {
-  usePlayerInfoStore().setPlayerShip(purchaseShip(shipName.value));
+  usePlayerInfoStore().setPlayerShip(ship.purchaseShip(shipName.value));
   usePlayerInfoStore().setPlayerName(playerName);
-  createNewGame(
+  game.createNewGame(
     usePlayerInfoStore().playerName,
     usePlayerInfoStore().playerShip
   );

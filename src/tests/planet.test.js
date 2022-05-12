@@ -1,25 +1,26 @@
-import {getPlanetList, setCurrentPlanet, getCurrentPlanet, getMarketProductByName, getMarketValue} from '../composables/models/planet.js';
+import {jest} from '@jest/globals';
+import planet from '../composables/models/planet.js';
+import product from '../composables/models/product.js';
 
-const planets = getPlanetList();
+const planets = planet.getPlanetList();
 const productName = 'Purple Bananas';
+
+product.generateProductList = jest.fn().mockReturnValue([{
+  name: productName,
+  price: 200,
+  totalPrice: 600,
+  quantity: 3,
+}]);
 
 test( 'getPlanetList should return a list with 6 planets', () => {
   expect(planets).toHaveLength(6);
 });
 
-test('setCurrentPlanet should save currentPlanet', () => {
-  setCurrentPlanet('Xena');
-  const result = getCurrentPlanet();
-  expect(result.name).toEqual('Xena');
-});
-
-
-test('getMarketProductByName should return the right product', () => {
-  setCurrentPlanet('Xena');
-  expect(getMarketProductByName(productName).name).toEqual(productName);
+test('getMarketProductByName', () => {
+  planet.setCurrentPlanet('Xena');
+  expect(planet.getMarketProductByName(productName)).toBeDefined();
 });
 
 test('getMarketValue should return a value', () => {
-  setCurrentPlanet('Xena');
-  expect(getMarketValue(productName)).toBeGreaterThanOrEqual(1);
+  expect(planet.getMarketValue(productName)).toBeGreaterThanOrEqual(1);
 });

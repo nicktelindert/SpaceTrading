@@ -1,7 +1,19 @@
-import {getPlayerList, getHumanPlayer, createNewPlayer, checkForWinners, getNonHumanPlayers} from '../composables/models/player.js';
-import {purchaseShip, addProductToCargo, removeProductFromCargo, updateProductQuantityInCargo} from '../composables/models/ship.js';
+import player from '../composables/models/player.js';
+// import {purchaseShip, addProductToCargo, removeProductFromCargo, updateProductQuantityInCargo} from '../composables/models/ship.js';
+import ship from '../composables/models/ship.js';
+import {jest} from '@jest/globals';
+const shipModel = {
+  'name': 'Ship',
+  'cargo': [],
+  'capacity': 100,
+  'capacityUsed': 0,
+  'capacityFull': 100,
+};
 
-const playerList = getPlayerList();
+
+ship.purchaseShip = jest.fn().mockReturnValue(shipModel);
+
+const playerList = player.getPlayerList();
 
 
 test('getPlayerList should generate 4 players', () => {
@@ -9,46 +21,43 @@ test('getPlayerList should generate 4 players', () => {
 });
 
 test('createNewPlayer should create a human player', () => {
-  createNewPlayer(purchaseShip(), 'Henk');
-  const res = getHumanPlayer();
+  player.createNewPlayer(ship.purchaseShip(), 'Henk');
+  const res = player.getHumanPlayer();
   expect(res.ai).toBeFalsy();
 });
 
 test('checkForWinners should return false', () => {
-  const res = checkForWinners(2000000);
+  const res = player.checkForWinners(2000000);
   expect(res).toBeFalsy();
 });
 
 
 test('getNonHumanPlayers should return 4 players', () => {
-  expect(getNonHumanPlayers()).toHaveLength(4);
+  expect(player.getNonHumanPlayers()).toHaveLength(4);
 });
 
 test('getNonHumanPlayers should all have AI set to true', () => {
-  const players = getNonHumanPlayers();
+  const players = player.getNonHumanPlayers();
   players.forEach((player) => {
     expect(player.ai).toBeTruthy();
   });
 });
 
 test('Add a product to players cargo', () => {
-  const player = getHumanPlayer();
-  addProductToCargo(player, 3, 34, 'product');
-  expect(player.ship.cargo).toHaveLength(1);
+  ship.addProductToCargo(player.getHumanPlayer(), 3, 34, 'product');
+  expect(player.getHumanPlayer().ship.cargo).toHaveLength(1);
 });
 
 test('Update product quantity in cargo', () => {
-  const player = getHumanPlayer();
-  updateProductQuantityInCargo(player, 'product', 33);
-  expect(player.ship.cargo).toHaveLength(1);
-  expect(player.ship.cargo[0]).toBeDefined();
-  expect(player.ship.cargo[0].quantity).toEqual(33);
+  ship.updateProductQuantityInCargo(player.getHumanPlayer(), 'product', 33);
+  expect(player.getHumanPlayer().ship.cargo).toHaveLength(1);
+  expect(player.getHumanPlayer().ship.cargo[0]).toBeDefined();
+  expect(player.getHumanPlayer().ship.cargo[0].quantity).toEqual(33);
 });
 
 test('Remove product from cargo', () => {
-  const player = getHumanPlayer();
-  removeProductFromCargo(player, 'product');
-  expect(player.ship.cargo).toHaveLength(0);
+  ship.removeProductFromCargo(player.getHumanPlayer(), 'product');
+  expect(player.getHumanPlayer().ship.cargo).toHaveLength(0);
 });
 
 
