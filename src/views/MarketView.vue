@@ -38,16 +38,18 @@ const sellProductProxy = (selectProduct, amount, me) => {
             <span>Name</span>
             <span>Price</span>
             <span>Selling price</span>
+            <span>In cargo</span>
             <span>Amount</span>
             <span>Action</span>
         </div>
         {{ me.cargo }}
-        <div class="row cargo" v-for="product in me.ship.cargo" :key="product.name">
+        <div class="row cargo" v-for="product,idx in me.ship.cargo" :key="product.name">
             <span>{{ product.name }}</span>
-            <span>{{ product.price / product.quantity }}</span>
+            <span>{{ product.price }}</span>
             <span>{{ planet.getCurrentPlanet().market.filter(val => val.name === product.name)[0].price }}</span>
-            <span>{{ product.quantity }}</span>
-            <span><a class="button" href="#" @click.prevent="sellProductProxy(product.name, product.quantity, me)">Sell</a></span>
+	    <span>{{ product.quantity }}</span>
+	    <div><input name="amount" v-model="amount" type="number" /> </div>
+            <span><a class="button" href="#" @click.prevent="sellProductProxy(product.name, amount, me)">Sell</a></span>
         </div>
     </div>
     <h2>Product on {{ planet.getCurrentPlanet().name }}</h2>
@@ -68,7 +70,12 @@ const sellProductProxy = (selectProduct, amount, me) => {
 </template>
 <style>
   .row.cargo {
-      grid-template-columns: repeat(5, 2fr);
+      grid-template-columns: repeat(6, 2fr);
+  }
+	
+  .row.cargo input[type=number] {
+    width: 48px;
+    height: 16px;
   }
   
 </style>

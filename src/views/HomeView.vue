@@ -3,8 +3,10 @@ import player from '@/composables/models/player.js';
 import {usePlayerInfoStore} from '@/stores/playerInfo.js';
 
 let me = player.getHumanPlayer()
-usePlayerInfoStore().setPlayerBalance(me.balance)
-usePlayerInfoStore().setPlayerName(me.name)
+if (me) {
+    usePlayerInfoStore().setPlayerBalance(me.balance)
+    usePlayerInfoStore().setPlayerName(me.name)
+}
 </script>
 
 <template>

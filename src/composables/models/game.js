@@ -38,7 +38,7 @@ const buyProduct = (name, amount, human) => {
     if (totalPrice < human.balance) {
       player.updateBalance(human, -totalPrice);
       product.updateQuantity(selectedProduct, -amount);
-      ship.addProductToCargo(human, amount, totalPrice, selectedProduct.name);
+      ship.addProductToCargo(human, amount, selectedProduct.price, selectedProduct.name);
       player.updatePlayer(human);
       return true;
     } else {
