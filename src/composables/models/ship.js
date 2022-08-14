@@ -54,7 +54,7 @@ const addProductToCargo = (player, quantity, price, name) => {
   player.ship.cargo.push({
     quantity: parseInt(quantity),
     name: name,
-    price: price,
+    price: price	  
   });
 
   updateCapacity(player.ship);
