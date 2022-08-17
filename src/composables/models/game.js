@@ -13,6 +13,8 @@ const createNewGame = (playerName, ship) => {
   }
 
   round = 1;
+  
+  localStorage.setItem('currentRound', round);
 };
 
 const startGame = (newGame = true) => {
@@ -21,6 +23,8 @@ const startGame = (newGame = true) => {
   }
 
   gameNumber++;
+  
+  localStorage.setItem('currentGame', gameNumber);
 };
 
 const startRound = (planetName) => {
@@ -71,6 +75,8 @@ const sellProduct = (name, amount, human) => {
 const endRound = () => {
   // 1. Let AI players make some decisions
   letAiPlay();
+  
+  round = localStorage.getItem('currentRound')
   if (round === 12) {
     const goal = financialGoal * gameNumber;
     if (player.checkForWinners(goal)) {
@@ -83,6 +89,9 @@ const endRound = () => {
   }
 
   round++;
+
+  localStorage.setItem('currentRound', round);
+  
   return round;
 };
 
