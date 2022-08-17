@@ -7,6 +7,7 @@ import player from '@/composables/models/player.js';
 
 let selectProductBuy = ref('')
 let amount = ref()
+let sellingAmount = []
 
 let me = player.getHumanPlayer()
 usePlayerInfoStore().setPlayerBalance(me.balance)
@@ -15,6 +16,11 @@ usePlayerInfoStore().setPlayerName(me.name)
 const buyProductProxy = (selectProduct, amount, me) => {
     game.buyProduct(selectProduct, amount, me)
     document.location.reload()
+}
+
+const setSellAmount = (event) => {
+    console.log(event.target.value)
+    sellingAmount[event.target.id] = event.target.value
 }
 
 const sellProductProxy = (selectProduct, amount, me) => {
@@ -47,9 +53,9 @@ const sellProductProxy = (selectProduct, amount, me) => {
             <span>{{ product.name }}</span>
             <span>{{ product.price }}</span>
             <span>{{ planet.getCurrentPlanet().market.filter(val => val.name === product.name)[0].price }}</span>
-	    <span>{{ product.quantity }}</span>
-	    <div><input name="amount" v-model="amount" type="number" /> </div>
-            <span><a class="button" href="#" @click.prevent="sellProductProxy(product.name, amount, me)">Sell</a></span>
+            <span>{{ product.quantity }}</span>
+            <div><input name="amount" :id="'amount-'+ idx" type="number" @input="setSellAmount"/> </div>
+            <span><a class="button" href="#" @click.prevent="sellProductProxy(product.name, sellingAmount['amount-'+idx], me)">Sell</a></span>
         </div>
     </div>
     <h2>Product on {{ planet.getCurrentPlanet().name }}</h2>
