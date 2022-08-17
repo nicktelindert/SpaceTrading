@@ -18,6 +18,7 @@ const createNewGame = (playerName, ship) => {
 };
 
 const startGame = (newGame = true) => {
+  gameNumber = localStorage.getItem('currentGame')
   if (newGame) {
     gameNumber = 1;
   }
@@ -91,7 +92,7 @@ const endRound = () => {
   round++;
 
   localStorage.setItem('currentRound', round);
-  
+
   return round;
 };
 
