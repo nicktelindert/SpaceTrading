@@ -6,8 +6,10 @@ I do this project mostly to improve my coding and organization abilities.
 - Do a project completely TDD
 - Try to get better at working organized and structured
 
-### Todo
-I moved todos to the project feature of github
+## Todo
+- Implement Winner flow
+- Implement Game-over flow
+- Base market price on current market supply (Is now a random number)
 
 ### Future ideas
 - Add scenario mechanism
