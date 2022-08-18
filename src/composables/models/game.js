@@ -33,18 +33,19 @@ const startRound = (planetName) => {
   planet.setCurrentPlanet(planetName);
 };
 
-const buyProduct = (name, amount, human) => {
+const buyProduct = (name, amount, playerObj) => {
   const selectedProduct = planet.getMarketProductByName(name);
-  if (amount > human.ship.capacity) {
+
+  if (amount > playerObj.ship.capacity) {
     return false;
   }
   if (selectedProduct) {
     const totalPrice = amount * selectedProduct.price;
-    if (totalPrice < human.balance) {
-      player.updateBalance(human, -totalPrice);
+    if (totalPrice < playerObj.balance) {
+      player.updateBalance(playerObj, -totalPrice);
       product.updateQuantity(selectedProduct, -amount);
-      ship.addProductToCargo(human, amount, selectedProduct.price, selectedProduct.name);
-      player.updatePlayer(human);
+      ship.addProductToCargo(playerObj, amount, selectedProduct.price, selectedProduct.name);
+      player.updatePlayer(playerObj);
       return true;
     } else {
       return false;
@@ -52,21 +53,21 @@ const buyProduct = (name, amount, human) => {
   }
 };
 
-const sellProduct = (name, amount, human) => {
-  const selectedProduct = ship.getProductFromCargo(human, name);
+const sellProduct = (name, amount, playerObj) => {
+  const selectedProduct = ship.getProductFromCargo(playerObj, name);
   const planetProduct = planet.getMarketProductByName(name);
   if (selectedProduct && amount <= selectedProduct.quantity && planetProduct) {
     const totalPrice = amount * planetProduct.price;
-    player.updateBalance(human, totalPrice);
+    player.updateBalance(playerObj, totalPrice);
     if (amount < selectedProduct.quantity) {
-      ship.updateProductQuantityInCargo(human, name, parseInt(selectedProduct.quantity - amount));
+      ship.updateProductQuantityInCargo(playerObj, name, parseInt(selectedProduct.quantity - amount));
     } else {
-      ship.removeProductFromCargo(human, name);
+      ship.removeProductFromCargo(playerObj, name);
     }
     planet.getCurrentPlanet().market = planet.getCurrentPlanet().market.filter((val) => val.name !== name);
     product.updateQuantity(planetProduct, parseInt(amount));
     planet.getCurrentPlanet().market.push(planetProduct);
-    player.updatePlayer(human);
+    player.updatePlayer(playerObj);
     return true;
   } else {
     return false;
@@ -74,7 +75,6 @@ const sellProduct = (name, amount, human) => {
 };
 
 const endRound = () => {
-  // 1. Let AI players make some decisions
   letAiPlay();
   
   round = localStorage.getItem('currentRound')
@@ -93,23 +93,22 @@ const endRound = () => {
 
   localStorage.setItem('currentRound', round);
 
-  return round;
+  return false;
 };
 
 const letAiPlay = () => {
   const planetList = planet.getPlanetList();
   const nonHumanPlayers = player.getNonHumanPlayers();
   nonHumanPlayers.forEach((nonHumanPlayer) => {
-    if (nonHumanPlayer.ai) {
-      const currentPlanet = planetList[generateMinMaxNumber(0, (planetList.length-1))];
-      if (nonHumanPlayer.ship.cargo.length >0) {
-        nonHumanPlayer.ship.cargo.forEach((product) => {
-          sellProduct(product.name, product.quantity, nonHumanPlayer);
-        });
-      } else {
-        buyProduct(currentPlanet.market[generateMinMaxNumber(0, currentPlanet.market.length-1)].name, (nonHumanPlayer.ship.capacity/4), nonHumanPlayer);
-      }
+    const currentPlanet = planetList[generateMinMaxNumber(0, (planetList.length-1))];
+    if (nonHumanPlayer.ship.cargo.length >0) {
+      nonHumanPlayer.ship.cargo.forEach((product) => {
+        sellProduct(product.name, product.quantity, nonHumanPlayer);
+      });
+    } else {
+      buyProduct(currentPlanet.market[generateMinMaxNumber(0, currentPlanet.market.length-1)].name, (nonHumanPlayer.ship.capacity/4), nonHumanPlayer);
     }
+    
   });
 
   return true;
