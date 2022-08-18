@@ -16,8 +16,8 @@ const getShipList = () => {
       const newShip = {};
       newShip.name = shipName;
       newShip.cargo = [];
-      newShip.price = generateMinMaxNumber(10000, 15000);
-      newShip.totalCapacity = generateMinMaxNumber(100, 150);
+      newShip.price = parseInt(generateMinMaxNumber(7000, 10000));
+      newShip.totalCapacity = parseInt(generateMinMaxNumber(100, 150));
       newShip.capacity = newShip.totalCapacity;
       newShip.usedCapacity = 0;
       ships.push(newShip);
@@ -57,11 +57,12 @@ const addProductToCargo = (player, quantity, price, name) => {
     price: price	  
   });
 
+
   updateCapacity(player.ship);
 };
 
-const removeProductFromCargo = (player, name) => {
-  player.ship.cargo = player.ship.cargo.filter((val) => val.name !== name);
+const removeProductFromCargo = (player, idx) => {
+   player.ship.cargo.splice(idx, 1)
   updateCapacity(player.ship);
 };
 
@@ -74,8 +75,7 @@ const updateCapacity = (ship) => {
   ship.capacity = parseInt(ship.totalCapacity - usedCapacity);
 };
 
-const updateProductQuantityInCargo = (player, name, quantity) => {
-  const idx = player.ship.cargo.findIndex((obj) => obj.name === name);
+const updateProductQuantityInCargo = (player, idx, quantity) => {
   player.ship.cargo[idx].quantity = quantity;
   updateCapacity(player.ship);
 };

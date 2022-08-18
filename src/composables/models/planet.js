@@ -11,6 +11,7 @@ const names = [
 
 let currentPlanet = localStorage.getItem('currentPlanet') ? JSON.parse(localStorage.getItem('currentPlanet')) : [];
 let planetList = [];
+
 const generatePlanet = (planetName) => {
   if (planetName) {
     return {
@@ -19,7 +20,6 @@ const generatePlanet = (planetName) => {
     };
   }
 
-  return {};
 };
 
 const setCurrentPlanet = (planetName) => {

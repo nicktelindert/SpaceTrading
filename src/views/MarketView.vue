@@ -9,12 +9,11 @@ let selectProductBuy = ref('')
 let amount = ref()
 let sellingAmount = []
 
-let me = player.getHumanPlayer()
-usePlayerInfoStore().setPlayerBalance(me.balance)
-usePlayerInfoStore().setPlayerName(me.name)
+usePlayerInfoStore().setPlayerBalance(player.getHumanPlayer().balance)
+usePlayerInfoStore().setPlayerName(player.getHumanPlayer().name)
 
-const buyProductProxy = (selectProduct, amount, me) => {
-    game.buyProduct(selectProduct, amount, me)
+const buyProductProxy = (selectProduct, amount) => {
+    game.buyProduct(selectProduct, amount, player.getHumanPlayer())
     document.location.reload()
 }
 
@@ -23,8 +22,9 @@ const setSellAmount = (event) => {
     sellingAmount[event.target.id] = event.target.value
 }
 
-const sellProductProxy = (selectProduct, amount, me) => {
-    game.sellProduct(selectProduct, amount, me)
+const sellProductProxy = (selectProduct, amount) => {
+    console.log(selectProduct)
+    game.sellProduct(selectProduct, amount, player.getHumanPlayer())
     document.location.reload()
 }
 
@@ -32,11 +32,11 @@ const sellProductProxy = (selectProduct, amount, me) => {
 
 <template>
     <h1>{{ planet.getCurrentPlanet().name}} Market</h1>
-    <p>Free cargo space: {{ me.ship.capacity }} ton</p>
+    <p>Free cargo space: {{ player.getHumanPlayer().ship.capacity }} ton</p>
     <template v-if="selectProductBuy !== ''">
         <p> How much of {{selectProductBuy}} do you want to buy?</p>
         <input name="amount" v-model="amount" type="number"/>
-        <a class="button" @click.prevent="buyProductProxy(selectProductBuy, amount, me)">Buy</a>
+        <a class="button" @click.prevent="buyProductProxy(selectProductBuy, amount)">Buy</a>
     </template>
     <h2>My cargo</h2>
         <div class="table">
@@ -48,14 +48,14 @@ const sellProductProxy = (selectProduct, amount, me) => {
             <span>Amount</span>
             <span>Action</span>
         </div>
-        {{ me.cargo }}
-        <div class="row cargo" v-for="product,idx in me.ship.cargo" :key="product.name">
+        {{ player.getHumanPlayer().cargo }}
+        <div class="row cargo" v-for="product,idx in player.getHumanPlayer().ship.cargo" :key="product.name">
             <span>{{ product.name }}</span>
             <span>{{ product.price }}</span>
             <span>{{ planet.getCurrentPlanet().market.filter(val => val.name === product.name)[0].price }}</span>
             <span>{{ product.quantity }}</span>
             <div><input name="amount" :id="'amount-'+ idx" type="number" @input="setSellAmount"/> </div>
-            <span><a class="button" href="#" @click.prevent="sellProductProxy(product.name, sellingAmount['amount-'+idx], me)">Sell</a></span>
+            <span><a class="button" href="#" @click.prevent="sellProductProxy(idx, sellingAmount['amount-'+idx])">Sell</a></span>
         </div>
     </div>
     <h2>Product on {{ planet.getCurrentPlanet().name }}</h2>

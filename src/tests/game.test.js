@@ -43,7 +43,6 @@ beforeAll (() => {
     'ai': true,
   }]);
 
-  jest.spyOn(ship, 'addProductToCargo').mockReturnThis()
   jest.spyOn(ship, 'getProductFromCargo').mockReturnValue({'name': productName, 'quantity': 15 })
   jest.spyOn(ship, 'updateProductQuantityInCargo').mockReturnThis()
   jest.spyOn(ship, 'removeProductFromCargo').mockReturnThis()
@@ -94,22 +93,29 @@ test ('Buy a product should return false becuase of insufficient balance', () =>
 })
 test('Sell product should return false', () => {
   game.startRound('Xena');
-  expect( game.sellProduct(productName, 19, player.getHumanPlayer())).toBeFalsy();
+  expect( game.sellProduct(0, 19, player.getHumanPlayer())).toBeFalsy();
 });
 
-test('Sell product should return false because there is no room left', () => {
+test('Sell product should return false because we sell more than we have', () => {
   game.startRound('Xena');
-  expect( game.sellProduct(productName, player.getHumanPlayer().ship.capacity+1, player.getHumanPlayer())).toBeFalsy();
+  expect( game.sellProduct(0, player.getHumanPlayer().ship.capacity+1, player.getHumanPlayer())).toBeFalsy();
 });
 
 test('Sell product should return true', () => {
   game.startRound('Xena');
-  expect( game.sellProduct(productName, 12, player.getHumanPlayer())).toBeTruthy();
+  jest.spyOn(player, 'getHumanPlayer').mockReturnValue({ 
+    'name': 'Player',
+    'ai': false,
+    'balance': 50000,
+    'ship': shipModel
+  })
+
+  expect( game.sellProduct(0, 13, player.getHumanPlayer())).toBeTruthy();
 });
 
 test('Sell product should call ship.removeProductFromCargo', () => {
   game.startRound('Xena');
-  game.sellProduct(productName, 15, player.getHumanPlayer())
+  game.sellProduct(0, 15, player.getHumanPlayer())
   expect(ship.removeProductFromCargo).toBeCalled();
 });
 
@@ -151,7 +157,7 @@ test('letAiPlay should return true', () => {
 
 test('letAiPlay should call sellProduct', () => {
   shipModel.cargo = [{name: productName, price: 12.50, quantity: 12}]
-  jest.spyOn(player, 'getNonHumanPlayers').mockReturnValue([{'name': 'computer', 'ai': true, 'ship': shipModel}])
+  jest.spyOn(player, 'getNonHumanPlayers').mockReturnValue([{'name': 'computer', 'ai': true, balance: 50000, 'ship': shipModel}])
   game.letAiPlay()
   expect(game.sellProduct).toBeCalled();
 });

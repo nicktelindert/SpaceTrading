@@ -13,19 +13,22 @@ const createNewPlayer = (ship, playerName) => {
   if (ship) {
     let ai = true;
     let name;
+    let balance = 50000
     if (playerName) {
       ai = false;
       name = playerName;
     } else {
       name = names.pop();
     }
+    
 
     list.push({
       name: name,
       ai: ai,
-      balance: 50000 - ship.price,
+      balance: (balance - ship.price),
       ship: ship,
     });
+
     localStorage.setItem('playerList', JSON.stringify(list));
   }
 };
@@ -46,14 +49,18 @@ const updateBalance = (player, sum) => {
 };
 
 const checkForWinners = (currentGoal) => {
-  const players = list.filter((player) => player.balance >= currentGoal);
+  let playerList = player.getPlayerList()
 
-  if (players.length === 1) {
-    // We actually have a winner
-    return true;
+  if (playerList.length >0) {
+    const players = playerList.filter((player) => player.balance >= currentGoal);
+    if (players.length === 1) {
+      // We actually have a winner
+      return true;
+    }
+  
+    return false;
   }
 
-  return false;
 };
 
 const getHumanPlayer = () => {

@@ -16,6 +16,12 @@ test( 'getPlanetList should return a list with 6 planets', () => {
   expect(planets).toHaveLength(6);
 });
 
+test ('setCurrentPlanet should call setItem on localStorage', () => {
+  jest.spyOn(localStorage, 'setItem')
+  planet.setCurrentPlanet('Xena')
+  expect(localStorage.setItem).toBeCalled()
+})
+
 test('getMarketProductByName', () => {
   planet.setCurrentPlanet('Xena');
   expect(planet.getMarketProductByName(productName)).toBeDefined();

@@ -25,6 +25,10 @@ test('updateCapacity should decrease cargo bij 100', () => {
   expect(shipBought.capacity).toEqual(expectedResult);
 });
 
+test ('getProductFromCargo should return a product', () => {
+  expect(ship.getProductFromCargo({ship: {cargo: [{name: 'test'}]}}, 'test')).toEqual({name: 'test'})
+})
+
 test('purchaseShip should return the correct ship', () => {
   const shipBought = ship.purchaseShip('SteamRocket V1');
   expect(shipBought.name).toEqual('SteamRocket V1');
