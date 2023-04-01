@@ -19,6 +19,7 @@ const createPlayer = (ship, playerName) => {
 // Retrieve player list from local storage
 const getPlayerList = () => {
   const savedList = localStorage.getItem('playerList');
+
   return savedList ? JSON.parse(savedList) : [];
 };
 
@@ -55,22 +56,18 @@ const addPlayer = (ship, playerName) => {
   return player;
 };
 
-// Update the balance of a player
-const updateBalance = (player, amount) => {
+const updatePlayer = (player, amount) => {
   const playerList = initPlayerList();
   const index = playerList.findIndex(p => p.name === player.name);
 
-  playerList[index].balance += amount;
-  localStorage.setItem('playerList', JSON.stringify(playerList));
-};
+  if (amount) {
+    playerList[index].balance += amount;
+  } else {
+    playerList[index] = player;
+  }
 
-// Update an existing player in the list
-const updatePlayer = (player) => {
-  const playerList = initPlayerList();
-  const index = playerList.findIndex(p => p.name === player.name);
-
-  playerList[index] = player;
   localStorage.setItem('playerList', JSON.stringify(playerList));
+ 
 };
 
 // Get the human player (if any)
@@ -94,7 +91,6 @@ const getAIPlayers = () => {
 const player = {
   initPlayerList,
   addPlayer,
-  updateBalance,
   updatePlayer,
   getHumanPlayer,
   hasHumanPlayer,

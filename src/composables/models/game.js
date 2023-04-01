@@ -3,28 +3,23 @@ import ship from './ship.js';
 import player from './player.js';
 import {generateMinMaxNumber} from '../utils/numbers.js';
 import product from './product.js';
-const financialGoal = 100000;
+
+const FINANCIAL_GOAL = 100000;
 let gameNumber = 0;
 let round = 0;
 
 const createNewGame = (playerName, ship) => {
-  if (playerName && ship) {
-    player.addPlayer(ship, playerName);
+  if (!playerName || !ship) {
+    return;
   }
 
+  player.addPlayer(ship, playerName);
   round = 1;
-  
   localStorage.setItem('currentRound', round);
 };
 
 const startGame = (newGame = true) => {
-  gameNumber = localStorage.getItem('currentGame')
-  if (newGame) {
-    gameNumber = 1;
-  }
-
-  gameNumber++;
-  
+  gameNumber = newGame ? 1 : Number(localStorage.getItem('currentGame')) + 1;
   localStorage.setItem('currentGame', gameNumber);
 };
 
@@ -38,81 +33,89 @@ const buyProduct = (name, amount, human) => {
   if (amount > human.ship.capacity) {
     return false;
   }
-  if (selectedProduct) {
-    const totalPrice = amount * selectedProduct.price;
-    if (totalPrice < human.balance) {
-      player.updateBalance(human, -totalPrice);
-      product.updateQuantity(selectedProduct, -amount);
-      ship.addProductToCargo(human, amount, selectedProduct.price, selectedProduct.name);
-      player.updatePlayer(human);
-      return true;
-    } else {
-      return false;
-    }
+
+  if (!selectedProduct) {
+    return false;
   }
+
+  const totalPrice = amount * selectedProduct.price;
+  if (totalPrice > human.balance) {
+    return false;
+  }
+
+  player.updatePlayer(human, -totalPrice);
+  human = player.getHumanPlayer();
+  product.updateQuantity(selectedProduct, -amount);
+  human = player.getHumanPlayer();
+  ship.addProductToCargo(human, amount, selectedProduct.price, selectedProduct.name);
+  player.updatePlayer(human);
+  return true;
 };
 
 const sellProduct = (name, amount, human) => {
   const selectedProduct = ship.getProductFromCargo(human, name);
+
   const planetProduct = planet.getMarketProductByName(name);
-  if (selectedProduct && amount <= selectedProduct.quantity && planetProduct) {
-    const totalPrice = amount * planetProduct.price;
-    player.updateBalance(human, totalPrice);
-    if (amount < selectedProduct.quantity) {
-      ship.updateProductQuantityInCargo(human, name, parseInt(selectedProduct.quantity - amount));
-    } else {
-      ship.removeProductFromCargo(human, name);
-    }
-    planet.getCurrentPlanet().market = planet.getCurrentPlanet().market.filter((val) => val.name !== name);
-    product.updateQuantity(planetProduct, parseInt(amount));
-    planet.getCurrentPlanet().market.push(planetProduct);
-    player.updatePlayer(human);
-    return true;
-  } else {
+  if (!selectedProduct || amount > selectedProduct.quantity || !planetProduct) {
     return false;
   }
+
+  const totalPrice = amount * planetProduct.price;
+  player.updatePlayer(human, totalPrice);
+  human = player.getHumanPlayer();
+  if (amount < selectedProduct.quantity) {
+    ship.updateProductQuantityInCargo(human, name, parseInt(selectedProduct.quantity - amount));
+  } else {
+    ship.removeProductFromCargo(human, name);
+  }
+  planet.getCurrentPlanet().market = planet.getCurrentPlanet().market.filter((val) => val.name !== name);
+  product.updateQuantity(planetProduct, parseInt(amount));
+  planet.getCurrentPlanet().market.push(planetProduct);
+  player.updatePlayer(human);
+  return true;
 };
 
 const endRound = () => {
   // 1. Let AI players make some decisions
   letAiPlay();
   
-  round = localStorage.getItem('currentRound')
-  if (round === 12) {
-    const goal = financialGoal * gameNumber;
-    if (player.checkForWinners(goal)) {
-      if (!player.isThereAHumanPlayer()) {
-        return false;
-      }
-    } else {
-      return false;
-    }
+  round = Number(localStorage.getItem('currentRound')) + 1;
+  localStorage.setItem('currentRound', round);
+
+  if (round !== 12) {
+    return round;
   }
 
-  round++;
-
-  localStorage.setItem('currentRound', round);
+  const goal = FINANCIAL_GOAL * gameNumber;
+  if (!player.checkForWinners(goal) || !player.isThereAHumanPlayer()) {
+    return false;
+  }
 
   return round;
 };
 
+
 const letAiPlay = () => {
   const planetList = planet.getPlanetList();
-  const nonHumanPlayers = player.getNonHumanPlayers();
-  nonHumanPlayers.forEach((nonHumanPlayer) => {
-    if (nonHumanPlayer.ai) {
-      const currentPlanet = planetList[generateMinMaxNumber(0, (planetList.length-1))];
-      if (nonHumanPlayer.ship.cargo.length >0) {
-        nonHumanPlayer.ship.cargo.forEach((product) => {
-          sellProduct(product.name, product.quantity, nonHumanPlayer);
-        });
-      } else {
-        buyProduct(currentPlanet.market[generateMinMaxNumber(0, currentPlanet.market.length-1)].name, (nonHumanPlayer.ship.capacity/4), nonHumanPlayer);
-      }
+  const nonHumanPlayers = player.getAIPlayers();
+  
+  for (const nonHumanPlayer of nonHumanPlayers) {
+    if (!nonHumanPlayer.ai) {
+      continue;
     }
-  });
-
-  return true;
+    
+    if (nonHumanPlayer.ship.cargo.length > 0) {
+      for (const product of nonHumanPlayer.ship.cargo) {
+        sellProduct(product.name, product.quantity, nonHumanPlayer);
+      }
+    } else {
+      const selectedPlanet = planetList[generateMinMaxNumber(0, planetList.length - 1)];
+      const productToBuy = selectedPlanet.market[generateMinMaxNumber(0, selectedPlanet.market.length - 1)];
+      const maxAmountToBuy = Math.floor(nonHumanPlayer.ship.capacity / 4);
+      const amountToBuy = Math.min(maxAmountToBuy, productToBuy.quantity);
+      buyProduct(productToBuy.name, amountToBuy, nonHumanPlayer);
+    }
+  }
 };
 
 const game = {

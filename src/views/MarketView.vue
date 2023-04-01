@@ -25,6 +25,7 @@ const setSellAmount = (event) => {
 }
 
 const sellProductProxy = (selectProduct, amount, me) => {
+    console.log(selectProduct)
     game.sellProduct(selectProduct, amount, me)
     document.location.reload()
 }
