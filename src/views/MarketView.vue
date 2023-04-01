@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref,nextTick, watch } from 'vue';
 import {usePlayerInfoStore} from '@/stores/playerInfo.js';
 import game from '@/composables/models/game.js';
 import planet from '@/composables/models/planet.js';
@@ -7,6 +7,7 @@ import player from '@/composables/models/player.js';
 
 let selectProductBuy = ref('')
 let amount = ref()
+
 let sellingAmount = []
 
 let me = player.getHumanPlayer()
@@ -27,6 +28,14 @@ const sellProductProxy = (selectProduct, amount, me) => {
     game.sellProduct(selectProduct, amount, me)
     document.location.reload()
 }
+
+watch(selectProductBuy, (newValue) => {
+   if (newValue !== '') {
+      nextTick(() => {
+        window.scrollTo(0,0);
+      });
+    }
+})
 
 </script>
 
