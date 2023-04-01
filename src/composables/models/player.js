@@ -7,83 +7,100 @@ const names = [
   'DollarSigns Inc.',
 ];
 
-const list = localStorage.getItem('playerList') ? JSON.parse(localStorage.getItem('playerList')) : [];
+// Helper function to generate a new player object
+const createPlayer = (ship, playerName) => {
+  const isAI = !playerName;
+  const name = playerName || names.pop();
+  const balance = 50000 - ship.price;
 
-const createNewPlayer = (ship, playerName) => {
-  if (ship) {
-    let ai = true;
-    let name;
-    if (playerName) {
-      ai = false;
-      name = playerName;
-    } else {
-      name = names.pop();
-    }
-
-    list.push({
-      name: name,
-      ai: ai,
-      balance: 50000 - ship.price,
-      ship: ship,
-    });
-    localStorage.setItem('playerList', JSON.stringify(list));
-  }
+  return { name, isAI, balance, ship };
 };
 
-
+// Retrieve player list from local storage
 const getPlayerList = () => {
-  if (list.length <=1) {
-    for (let t=0; t < 4; t++) {
-      createNewPlayer(ship.purchaseShip());
-    }
+  const savedList = localStorage.getItem('playerList');
+  return savedList ? JSON.parse(savedList) : [];
+};
+
+// Create default AI players
+const createDefaultPlayers = (count) => {
+  const players = [];
+  for (let i = 0; i < count; i++) {
+    const newShip = ship.purchaseShip();
+    const player = createPlayer(newShip);
+    players.push(player);
   }
-
-  return list;
+  return players;
 };
 
-const updateBalance = (player, sum) => {
-  player.balance = parseInt(player.balance) + parseInt(sum);
-};
-
-const checkForWinners = (currentGoal) => {
-  const players = list.filter((player) => player.balance >= currentGoal);
-
-  if (players.length === 1) {
-    // We actually have a winner
-    return true;
+// Initialize player list
+const initPlayerList = () => {
+  const playerList = getPlayerList();
+  if (!playerList.length) {
+    const defaultPlayers = createDefaultPlayers(4);
+    localStorage.setItem('playerList', JSON.stringify(defaultPlayers));
+    return defaultPlayers;
   }
+  return playerList;
+}
 
-  return false;
+// Add a new player to the list
+const addPlayer = (ship, playerName) => {
+  const player = createPlayer(ship, playerName);
+  const playerList = initPlayerList();
+
+  playerList.push(player);
+  localStorage.setItem('playerList', JSON.stringify(playerList));
+
+  return player;
 };
 
-const getHumanPlayer = () => {
-  const filter = list.filter( (val) => val.ai === false);
-  if (filter.length === 1) {
-    return filter[0];
-  }
+// Update the balance of a player
+const updateBalance = (player, amount) => {
+  const playerList = initPlayerList();
+  const index = playerList.findIndex(p => p.name === player.name);
+
+  playerList[index].balance += amount;
+  localStorage.setItem('playerList', JSON.stringify(playerList));
 };
 
-const getNonHumanPlayers = () => {
-  return list.filter( (val) => val.ai === true);
-};
-
-const isThereAHumanPlayer = () => {
-  // check if human player is still in the race
-  return list.filter( (val) => val.ai === false).length >0;
-};
-
+// Update an existing player in the list
 const updatePlayer = (player) => {
-  let updatedList = list;
-  const searchPlayer = list.filter( (item) => item.name === player.name);
-  if (searchPlayer.length >0) {
-    updatedList = updatedList.filter((item) => item.name !== player.name);
-    updatedList.push(player);
-    localStorage.setItem('playerList', JSON.stringify(updatedList));
-  }
+  const playerList = initPlayerList();
+  const index = playerList.findIndex(p => p.name === player.name);
+
+  playerList[index] = player;
+  localStorage.setItem('playerList', JSON.stringify(playerList));
+};
+
+// Get the human player (if any)
+const getHumanPlayer = () => {
+  const playerList = initPlayerList();
+  return playerList.find(p => !p.isAI);
+};
+
+// Check if there is at least one human player
+const hasHumanPlayer = () => {
+  const playerList = initPlayerList();
+  return playerList.some(p => !p.isAI);
+};
+
+// Get all non-human players
+const getAIPlayers = () => {
+  const playerList = initPlayerList();
+  return playerList.filter(p => p.isAI);
 };
 
 const player = {
-  getPlayerList, createNewPlayer, getHumanPlayer, isThereAHumanPlayer, checkForWinners, getNonHumanPlayers, updateBalance, updatePlayer,
+  initPlayerList,
+  addPlayer,
+  updateBalance,
+  updatePlayer,
+  getHumanPlayer,
+  hasHumanPlayer,
+  getAIPlayers,
+  getPlayerList
 };
 
 export default player;
+

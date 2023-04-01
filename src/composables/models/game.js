@@ -9,7 +9,7 @@ let round = 0;
 
 const createNewGame = (playerName, ship) => {
   if (playerName && ship) {
-    player.createNewPlayer(ship, playerName);
+    player.addPlayer(ship, playerName);
   }
 
   round = 1;
