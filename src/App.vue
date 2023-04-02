@@ -1,8 +1,8 @@
 <script setup>
 import { computed } from "vue";
 import { usePlayerInfoStore } from "@/stores/playerInfo.js";
-import player from '@/composables/models/player.js';
-import game from '@/composables/models/game.js'
+import player from './models/player.js';
+import game from './models/game.js'
 import { useRouter } from 'vue-router';
 import router from '@/router'
 

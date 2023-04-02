@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from "vue";
-import ship from "@/composables/models/ship.js";
+import ship from "@/models/ship.js";
 import { usePlayerInfoStore } from "@/stores/playerInfo.js";
-import game from "@/composables/models/game.js";
+import game from "@/models/game.js";
 import router from "@/router";
 
 const shipList = ship.getShipList();

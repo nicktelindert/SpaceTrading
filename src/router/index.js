@@ -6,7 +6,7 @@ import MarketView from '@/views/MarketView.vue';
 import NextRoundView from '@/views/NextRoundView.vue';
 import HomeView from '@/views/HomeView.vue';
 import {createWebHistory, createRouter} from 'vue-router';
-import player from '@/composables/models/player.js';
+import player from '@/models/player.js';
 
 const routes = [
   {path: '/', component: HomeView},

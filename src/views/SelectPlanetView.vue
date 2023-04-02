@@ -1,8 +1,8 @@
 <script setup>
 import router from "@/router";
-import game from "@/composables/models/game.js";
-import planet from "@/composables/models/planet.js";
-import player from "@/composables/models/player.js";
+import game from "@/models/game.js";
+import planet from "@/models/planet.js";
+import player from "@/models/player.js";
 const players = player.getPlayerList();
 const me = player.getHumanPlayer();
 const planets = planet.getPlanetList();

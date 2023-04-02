@@ -1,5 +1,5 @@
 <script setup>
-import player from '@/composables/models/player.js';
+import player from '@/models/player.js';
 import {usePlayerInfoStore} from '@/stores/playerInfo.js';
 
 let me = player.getHumanPlayer()

@@ -2,7 +2,7 @@ import planet from './planet.js';
 import ship from './ship.js';
 import player from './player.js';
 import {generateMinMaxNumber} from '../utils/numbers.js';
-import product from './product.js';
+import './product.js';
 
 const FINANCIAL_GOAL = 100000;
 let gameNumber = 0;

@@ -1,4 +1,4 @@
-import product from './product.js';
+import Market from './market.js';
 
 const names = [
   'Persephone',
@@ -15,7 +15,7 @@ const generatePlanet = (planetName) => {
   if (planetName) {
     return {
       name: planetName,
-      market: product.generateProductList(),
+      market: new Market()
     };
   }
 
@@ -34,7 +34,7 @@ const setCurrentPlanet = (planetName) => {
 };
 
 const getMarketProductByName = (name) => {
-  const searchProduct = getCurrentPlanet().market.filter((val) => val.name === name);
+  const searchProduct = getCurrentPlanet().market.getProductByName(name)
   if (searchProduct[0]) {
     return searchProduct[0];
   }

@@ -1,6 +1,6 @@
 <script setup>
- import player from '@/composables/models/player.js';
- import planet from '@/composables/models/planet.js';
+ import player from '@/models/player.js';
+ import planet from '@/models/planet.js';
  const imageFile = `images/planets/${planet.getCurrentPlanet().name}.png`
 </script>
 
